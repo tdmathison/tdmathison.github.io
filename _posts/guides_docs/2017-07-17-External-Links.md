@@ -45,3 +45,4 @@ date: 2017-07-17
 * [NetSec](https://netsec.ws/) - Misc network security tips and tricks<br />
 * [Offset-DB](http://offset-db.com/) - Known JMP ESP offsets for different versions of Windows<br />
 * [Kernel-Exploits](https://github.com/lucyoa/kernel-exploits) - Search for kernel exploits by version number (recently moved to a github account)<br />
+* [VirusTotal](https://www.virustotal.com) - Great for testing the detection rate of generated payloads<br />
