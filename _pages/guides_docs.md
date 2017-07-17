@@ -1,13 +1,13 @@
 ---
 layout: page
-title: Cheat Sheets
-excerpt: "An archive of reference material sorted by date."
+title: Guides & Docs
+excerpt: "An archive of reference material."
 search_omit: true
-permalink: /cheat_sheets/
+permalink: /guides_docs/
 ---
 
 <ul class="post-list">
-{% for post in site.categories.cheat_sheets %} 
+{% for post in site.categories.guides_docs %} 
   <li><article><a href="{{ site.url }}{{ post.url }}">{{ post.title }} <span class="entry-date"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time></span>{% if post.excerpt %} <span class="excerpt">{{ post.excerpt | remove: '\[ ... \]' | remove: '\( ... \)' | markdownify | strip_html | strip_newlines | escape_once }}</span>{% endif %}</a></article></li>
 {% endfor %}
 </ul>
