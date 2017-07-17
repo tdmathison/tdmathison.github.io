@@ -5,12 +5,12 @@ categories: guides_docs
 excerpt: A general strategy guideline for pentesting
 comments: false
 share: true
-tags: [hacking, pentest, guide]
+tags: [hacking, pentesting, guide]
 image:
   feature:
 date: 2017-07-17
 ---
-The following is a general guideline for how I would start to attack a machine.  I broke it down into enumeration, doing research on what I found, exploitation (either getting root or a low privilege), then attempting low-priv escalation.  
+The following is a general guideline for how I would start to attack a machine.  I broke it down into enumeration, doing research on what I found, exploitation (either getting root or a low privilege), then attempting low-priv escalation.
 
 > NOTE: These are generic guidelines where I have left out anything that is related to Offensive Security's lab. Still, the following may be helpful if you're not sure where to start or what to start using to make some progress. Hope it's helpful for somebody.
 
