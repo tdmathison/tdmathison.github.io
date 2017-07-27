@@ -19,6 +19,7 @@ date: 2017-07-17
 
 ## Windows Privilege Escalation
 * [Windows Privilege Escalation Fundamentals](http://www.fuzzysecurity.com/tutorials/16.html)<br />
+* [Windows PrivEsc Check](https://github.com/pentestmonkey/windows-privesc-check)<br />
 * [Windows Exploit Suggester](https://github.com/GDSSecurity/Windows-Exploit-Suggester)<br />
 * [Dumping Windows Credentials](https://www.securusglobal.com/community/2013/12/20/dumping-windows-credentials/)<br />
 
