@@ -9,6 +9,7 @@ tags: [links, hacking]
 image:
   feature:
 date: 2017-07-17
+modified: 2017-07-30
 ---
 # The following is a list of sites and links that I have found useful
 ## Linux Privilege Escalation
