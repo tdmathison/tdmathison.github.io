@@ -11,6 +11,19 @@ image:
 date: 2017-07-17
 ---
 # Some things I have ran into and my solution around them
+
+# List
+1. [Slow Kali Linux Updates](#slow-kali-linux-updates)
+2. [Hardware Clock Wrong in Kali Linux](#hardware-clock-wrong-in-kali-linux)
+3. [Setup NTP servers in Kali Linux](#setup-ntp-servers-in-kali-linux)
+4. [How to setup .htaccess for a nophp directory](#howto-setup-htaccess-for-a-nophp-directory)
+5. [Issues installing VirtualBox additions in Kali Linux](#issues-installing-vbox-additions)
+6. [Screenshots in Kali Linux](#screenshots-in-kali-linux)
+7. [Can't SSH with root into your machine](#cant-ssh-with-root)
+8. [Managing BurpSuite Proxy](#managing-burpsuite-proxy)
+9. [File format issues in downloaded exploit source files](#file-format-issues)
+
+<a name="slow-kali-linux-updates"></a>
 ## Slow Kali Linux Updates
 When performing apt-get update in Kali Linux you may get VERY slow download speeds even on high bandwidth connections. You can perform the following change to gain significantly faster download speeds for all of the distribution updates.<br />
 
@@ -27,6 +40,7 @@ deb http://repo.kali.org/kali kale-rolling main non-free contrib
 deb-src http://repo.kali.org/kali kale-rolling main non-free contrib
 ```
 
+<a name="hardware-clock-wrong-in-kali-linux"></a>
 ## Hardware Clock Wrong in Kali Linux
 If you have set the correct timezone in Kali Linux and your time is still wrong even after turning on "Automatic Date & Time" then the hardware clock may be off.<br />
 
@@ -74,6 +88,7 @@ root@sengen:~# ntpd -qg
 ntpd: time set +38157.952268s
 ```
 
+<a name="setup-ntp-servers-in-kali-linux"></a>
 ## Setup NTP servers in Kali Linux
 Kali Linux may not properly sync up it's date and time.  You can setup working NTP servers using the following instructions.<br />
 
@@ -102,7 +117,8 @@ Then restart NTP
 /etc/init.d/ntp restart
 ```
 
-## How-to Setup .htaccess for a NoPHP Directory
+<a name="howto-setup-htaccess-for-a-nophp-directory"></a>
+## How to Setup .htaccess for a NoPHP Directory
 Some RFI exploits may run against the local system. For example, when compromising a machine, I had pointed the victim to a php exploit on my local system. The exploit was instead running against my local system. This is due to the local Apache web server running the code as a normal web call.<br />
 
 To disable this and to setup a specific directory where php does not execute, the following must be done.
@@ -119,7 +135,8 @@ Within this file is a section regarding directories. A new directories section m
 </Directory>
 ```
 
-## Issues installing Virtual Box Linux Additions to Kali Linux VM
+<a name="issues-installing-vbox-additions"></a>
+## Issues installing Virtual Box Linux Additions in Kali Linux VM
 After mounting the Virtual Box Linux Additions ISO
 ```
 # Copy the files to a temp directory in your home directory
@@ -219,6 +236,7 @@ linux-headers-4.9.0-kali3-686-pae - Header files for Linux 4.9.0-kali3-686-pae
 linux-headers-4.9.0-kali3-686 - Header files for Linux 4.9.0-kali3-686
 ```
 
+<a name="screenshots-in-kali-linux"></a>
 ## Screenshots in Kali Linux
 KeepNote
 * To take a screenshot of a specific section of the screen you can press CTRL-INSERT and then drag a section of the screen you want in the image.  You can then paste this into your document.
@@ -226,6 +244,7 @@ KeepNote
 Linux
 * You can use a Linux tool call "screenshot" which offers similar functionality. Press SHIFT+PRTSCR to capture a specific area of the screen.  The image is dropped into your Pictures directory.
 
+<a name="cant-ssh-with-root"></a>
 ## Can't SSH with root into your machine
 When pivoting through networks you'll end up doing port forwarding and creating reverse SSH tunnels back into your linux machine. By default, in Debian root cannot do this for security reasons.<br /><br />
 <i>Change required to allow reverse SSH shells using the root account (only the Kali machine, not on your daily Linux machine)</i>
@@ -242,12 +261,14 @@ Restart SSH service
 root@sengen:~# service ssh restart
 ```
 
+<a name="managing-burpsuite-proxy"></a>
 ## Managing BurpSuite proxy
 Proxy Management
 * To make things easier for switching between using the Burp proxy and not I found that the "Proxy Selector" add-on worked the best
 * You can do a search in the add-on's repository for FireFox/Chrome/Safari and find this add-on
 * You then can add a BurpSuite proxy setting with 127.0.0.1:8080 as the proxy for when you want to intercept traffic
 
+<a name="file-format-issues"></a>
 ## File format issues in downloaded exploit source files
 From time-to-time you'll grab a file that was created on Windows but you want to use it on Linux (or the other way around) and there are return character issues in it. One thing that may fix your issue is using the dos2unix or unix2dos commands.
 
