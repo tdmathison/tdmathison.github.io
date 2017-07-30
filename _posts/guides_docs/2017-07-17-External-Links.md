@@ -22,6 +22,7 @@ date: 2017-07-17
 * [Windows PrivEsc Check](https://github.com/pentestmonkey/windows-privesc-check)<br />
 * [Windows Exploit Suggester](https://github.com/GDSSecurity/Windows-Exploit-Suggester)<br />
 * [Dumping Windows Credentials](https://www.securusglobal.com/community/2013/12/20/dumping-windows-credentials/)<br />
+* [Windows PrivEsc Methods for Pentesters](https://pentest.blog/windows-privilege-escalation-methods-for-pentesters/)<br />
 
 ## Exploit & Vulnerability Databases
 * [Exploit-DB](https://www.exploit-db.com/)<br />
