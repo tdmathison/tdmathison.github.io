@@ -9,6 +9,7 @@ tags: [tips-and-tricks, hacking]
 image:
   feature:
 date: 2017-07-17
+modified: 2017-07-29
 ---
 # Some things I have ran into and my solution around them
 
