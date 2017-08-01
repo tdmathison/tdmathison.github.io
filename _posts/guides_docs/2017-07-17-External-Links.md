@@ -9,7 +9,7 @@ tags: [links, hacking]
 image:
   feature:
 date: 2017-07-17
-modified: 2017-07-30
+modified: 2017-08-01
 ---
 # The following is a list of sites and links that I have found useful
 ## Linux Privilege Escalation
@@ -50,3 +50,4 @@ modified: 2017-07-30
 * [Kernel-Exploits](https://github.com/lucyoa/kernel-exploits) - Search for kernel exploits by version number (recently moved to a github account)<br />
 * [VirusTotal](https://www.virustotal.com) - Great for testing the detection rate of generated payloads<br />
 * [VulnHub](https://www.vulnhub.com/) - Mostly CTF-style vulnerable VM's<br />
+* [Shell-Storm](http://shell-storm.org) - Research blog, papers, and CTF write-up's relating to reverse engineering<br />
