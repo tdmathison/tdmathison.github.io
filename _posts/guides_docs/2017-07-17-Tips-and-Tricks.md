@@ -9,7 +9,7 @@ tags: [tips-and-tricks, hacking]
 image:
   feature:
 date: 2017-07-17
-modified: 2017-07-29
+modified: 2017-08-03
 ---
 # Some things I have ran into and my solution around them
 
@@ -19,10 +19,11 @@ modified: 2017-07-29
 3. [Setup NTP servers in Kali Linux](#setup-ntp-servers-in-kali-linux)
 4. [How to setup .htaccess for a nophp directory](#howto-setup-htaccess-for-a-nophp-directory)
 5. [Issues installing VirtualBox additions in Kali Linux](#issues-installing-vbox-additions)
-6. [Screenshots in Kali Linux](#screenshots-in-kali-linux)
-7. [Can't SSH with root into your machine](#cant-ssh-with-root)
-8. [Managing BurpSuite Proxy](#managing-burpsuite-proxy)
-9. [File format issues in downloaded exploit source files](#file-format-issues)
+6. [VirtualBox shares not showing up](#virtualbox-shares)
+7. [Screenshots in Kali Linux](#screenshots-in-kali-linux)
+8. [Can't SSH with root into your machine](#cant-ssh-with-root)
+9. [Managing BurpSuite Proxy](#managing-burpsuite-proxy)
+10. [File format issues in downloaded exploit source files](#file-format-issues)
 
 <a name="slow-kali-linux-updates"></a>
 ## Slow Kali Linux Updates
@@ -236,6 +237,21 @@ linux-headers-4.9.0-kali3-all - All header files for Linux 4.9 (meta-package)
 linux-headers-4.9.0-kali3-686-pae - Header files for Linux 4.9.0-kali3-686-pae
 linux-headers-4.9.0-kali3-686 - Header files for Linux 4.9.0-kali3-686
 ```
+
+<a name="virtualbox-shares"></a>
+## VirtualBox shares not showing up
+### Setting up a new VirtualBox share
+1. Click Devices -> Shared Folders -> Shared Folder Settings
+2. Click "Add new shared folder"
+3. Select a path on the host, give folder name, and check auto-mount and make permanent
+
+### Mounting
+At this point, depending on Linux distribution, you may see the shared folder pop up on your desktop in which you would be good to go. In other cases, you will see nothing happen at all.
+1. Install "virtualbox-guest-utils" in the guest Linux VM
+  * sudo apt-get install virtualbox-guest-utils
+2. Manually mount the shared host directory
+  * sudo mkdir /mnt/shared
+  * sudo mount -t vboxsf Share /mnt/share <i>(where "Share" is the name you gave it when adding it in VirtualBox)</i>
 
 <a name="screenshots-in-kali-linux"></a>
 ## Screenshots in Kali Linux
