@@ -132,7 +132,7 @@ SMB Client is a Samba tool used for connecting to remote systems. It can be used
 
 List the network shares on the target:
 ``` bash
-root@kali:~# root@kali:~# smbclient -L 192.168.1.100
+root@kali:~# smbclient -L 192.168.1.100
 ```
 
 Connect to the wwwroot share:
