@@ -9,7 +9,7 @@ tags: [tips-and-tricks, hacking]
 image:
   feature:
 date: 2017-07-17
-modified: 2017-08-03
+modified: 2018-01-07
 ---
 # Some things I have ran into and my solution around them
 
@@ -24,6 +24,7 @@ modified: 2017-08-03
 8. [Can't SSH with root into your machine](#cant-ssh-with-root)
 9. [Managing BurpSuite Proxy](#managing-burpsuite-proxy)
 10. [File format issues in downloaded exploit source files](#file-format-issues)
+11. [GDM takes 90s to shutdown](#gdm-90s-shutdown)
 
 <a name="slow-kali-linux-updates"></a>
 ## Slow Kali Linux Updates
@@ -296,3 +297,10 @@ root@kali:~# unix2dos test.txt
 unix2dos: converting file test.txt to DOS format...
 ```
 
+<a name="gdm-90s-shutdown"></a>
+## GDM takes 90s to shutdown
+On Kali Linux I have found that you may find a shutdown taking 90 seconds to shutdown due to it timing out on GDM (particularly for VM's). It seems this is a issue people are aware of and is related to systemd.  In the interim you can make the shutdown a little quicker by updating some config files to make it 10 seconds instead.
+
+### Config file updates
+/etc/systemd/user.conf => DefaultTimeoutStopSec=10s
+/etc/systemd/system.conf => DefaultTimeoutStopSec=10s
