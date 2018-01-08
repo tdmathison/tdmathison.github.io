@@ -302,5 +302,7 @@ unix2dos: converting file test.txt to DOS format...
 On Kali Linux I have found that you may find a shutdown taking 90 seconds to shutdown due to it timing out on GDM (particularly for VM's). It seems this is a issue people are aware of and is related to systemd.  In the interim you can make the shutdown a little quicker by updating some config files to make it 10 seconds instead.
 
 ### Config file updates
+```
 /etc/systemd/user.conf => DefaultTimeoutStopSec=10s
 /etc/systemd/system.conf => DefaultTimeoutStopSec=10s
+```
