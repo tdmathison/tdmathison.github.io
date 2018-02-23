@@ -5,7 +5,7 @@ categories: blog
 excerpt:
 comments: true
 share: true
-tags: [oscp, pentesting, hacking]
+tags: [offsec, oscp, pentesting, hacking]
 image:
   feature:
 date: 2017-07-14
