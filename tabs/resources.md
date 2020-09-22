@@ -47,7 +47,7 @@ The following are some locations where you can grab samples of live malware:
 | Zeltser | [https://zeltser.com/malicious-ip-blocklists/#](https://zeltser.com/malicious-ip-blocklists/#) |
 
 ## Malware Analysis Platforms
-These are images, VM's, or scripts to build out a VM that are suitable to reverse enginer or otherwise deal with analyzing malware.  Granted, you can build your own (I did for a long time) but being able to automate the creation of an environment in minimal time has proven to be more valuable.
+These are images, VM's, or scripts to build out a VM that is suitable to reverse engineer or otherwise deal with analyzing malware.  Granted, you can build your own (I did for a long time) but being able to automate the creation of an environment in minimal time has proven to be more valuable.
 
 | Name | Link |
 |:---|:----|
