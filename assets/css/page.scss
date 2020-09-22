@@ -8,3 +8,15 @@
 
 {% include_relative _addon/main.scss %}
 {% include_relative _addon/syntax.scss %}
+
+
+
+#about-me-image {
+    margin: 1rem 2rem 0rem 0rem;
+    float: left;
+
+    @media (max-width: 800px) {
+        display: block;
+        float: none;
+    }
+}
