@@ -9,7 +9,7 @@ tags: [flarevm, ghidra]
 ## Goal
 This is a quick guide to get you started on installing FlareVM by FireEye and setting up Ghidra for reverse engineering malware. The FlareVM installation is a script you can run that will turn a Windows 10 installation into a reverse engineering environment that has all the tools needed for binary analysis, RE, and a safe place to detonate malicious software.
 
-The flagship RE tool in the industry is HexRays IDA Pro and while a IDA Free version is available it has quite a few limitations.  Ghidra has been released as OpenSource by the NSA and parallels many features of IDA Pro and can augment IDA Free in a good way.
+The flagship RE tool in the industry is HexRays IDA Pro and while an IDA Free version is available it has quite a few limitations.  Ghidra has been released as OpenSource by the NSA and parallels many features of IDA Pro and can augment IDA Free in a good way.
 
 ## FireEye FlareVM
 To begin, you should have either Oracle VirtualBox [https://www.virtualbox.org](https://www.virtualbox.org) or VMware Workstation/Fusion [https://www.vmware.com/products/workstation-pro.html](https://www.vmware.com/products/workstation-pro.html) installed on the host machine you are going to perform analysis from.

@@ -19,7 +19,7 @@ The following are a few malware detonation sandboxes I have used and have been v
 | ANY.RUN | [https://any.run/](https://any.run/) |
 
 
-## Malware Sample sites
+## Malware Samples
 The following are some locations where you can grab samples of live malware:
 
 | Name | Link |
@@ -32,7 +32,7 @@ The following are some locations where you can grab samples of live malware:
 | Das Malwerk | [https://dasmalwerk.eu/](https://dasmalwerk.eu/) |
 | MalShare | [https://malshare.com/](https://malshare.com/) |
 
-### Network Packets
+### Network Packet Samples
 
 | Name | Link |
 |:---|:----|
