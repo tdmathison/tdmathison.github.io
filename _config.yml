@@ -25,8 +25,8 @@ avatar: /assets/img/profile.jpg   # support internet resources
 github:
   username: tdmathison             # change to your github username
 
-#twitter:
-#  username: twitter_username            # change to your twitter username
+twitter:
+  username: ciph34block            # change to your twitter username
 
 social:
   name: Travis Mathison                  # it will shows as the copyright owner in Footer
