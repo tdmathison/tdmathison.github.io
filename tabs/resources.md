@@ -64,3 +64,4 @@ While there are tons of disassemblers and decompilers out there, the following l
 | Hopper | [https://www.hopperapp.com/](https://www.hopperapp.com/) |
 | Binary Ninja | [https://binary.ninja/](https://binary.ninja/) |
 | Radare2 | [https://rada.re/n/](https://rada.re/n/) |
+| Cutter | [https://cutter.re/](https://cutter.re/) |
