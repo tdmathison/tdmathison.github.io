@@ -20,7 +20,9 @@ The following are a few malware detonation sandboxes I have used and have been v
 
 
 ## Malware Samples
-The following are some locations where you can grab samples of live malware:
+The following are some locations where you can grab samples of malware for analysis.
+
+### General Live Malware
 
 | Name | Link |
 |:---|:----|
@@ -29,6 +31,7 @@ The following are some locations where you can grab samples of live malware:
 | VirusTotal | [https://www.virustotal.com/gui/](https://www.virustotal.com/gui/) |
 | CyberLab | [https://cyberlab.pacific.edu/resources/malware-samples-for-students](https://cyberlab.pacific.edu/resources/malware-samples-for-students) |
 | MacOS Malware | [https://objective-see.com/malware.html](https://objective-see.com/malware.html) |
+| MacOS Malware Encyclopedia | [https://macos.checkpoint.com/](https://macos.checkpoint.com/) |
 | Das Malwerk | [https://dasmalwerk.eu/](https://dasmalwerk.eu/) |
 | MalShare | [https://malshare.com/](https://malshare.com/) |
 
@@ -45,6 +48,14 @@ The following are some locations where you can grab samples of live malware:
 |:---|:----|
 | URLHause | [https://urlhaus.abuse.ch/browse/](https://urlhaus.abuse.ch/browse/) |
 | Zeltser | [https://zeltser.com/malicious-ip-blocklists/#](https://zeltser.com/malicious-ip-blocklists/#) |
+
+## Malware Techniques examples
+A few GitHub repos that I found of which have examples of anti-analysis techniques (Anti-Debug, Anti-VM, Anti-Analysis, etc). These can be useful to compile and see what it looks like in the disassembler when you run into them.  This also can help in seeing what types of techniques may be found in malware attempting to make reverse engineering more difficult for the analyst.
+
+| Name | Link |
+|:---|:----|
+| alichtman: malware-techniques | [https://github.com/alichtman/malware-techniques](https://github.com/alichtman/malware-techniques) |
+| LordNoteworthy: al-khaser | [https://github.com/LordNoteworthy/al-khaser](https://github.com/LordNoteworthy/al-khaser) |
 
 ## Malware Analysis Platforms
 These are images, VM's, or scripts to build out a VM that is suitable to reverse engineer or otherwise deal with analyzing malware.  Granted, you can build your own (I did for a long time) but being able to automate the creation of an environment in minimal time has proven to be more valuable.
