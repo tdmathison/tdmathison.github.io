@@ -1,3 +1,3 @@
 # README
 
-[https://tdmathison.github.io](https://tdmathison.github.io)
+[https://www.travismathison.com](https://www.travismathison.com)
