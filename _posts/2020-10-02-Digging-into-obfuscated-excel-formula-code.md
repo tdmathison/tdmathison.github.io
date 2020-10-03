@@ -58,8 +58,8 @@ Following the formula code jumping around shows how painful this would be to man
 <img src="{{ site.url }}/assets/img/blogging/excel_02.png"/>
 
 ## The programatic solution
-In an attempt to solve this problem I had two specific requirements:
-1) Since specific cells were referenced by name such as $AB$50741 I needed to make sure I built a table were they could be referenced
+In an attempt to solve this problem I had two specific requirements:<br />
+1) Since specific cells were referenced by name such as $AB$50741 I needed to make sure I built a table were they could be referenced<br />
 2) I needed a way to start with a value in a given cell and then merge the content into the string by replacing the cell location text
 
 All the would be left is applying step 2 over and over until there are no more cell location strings to replace.
