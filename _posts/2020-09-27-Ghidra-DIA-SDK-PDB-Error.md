@@ -1,7 +1,7 @@
 ---
 title: "Ghidra error: Unable to locate the DIA SDK"
 author: Travis Mathison
-date: 2020-09-27 11:08:00 +0800
+date: 2020-09-27 11:08:00 -0700
 categories: [Blogging]
 tags: [ghidra]
 ---

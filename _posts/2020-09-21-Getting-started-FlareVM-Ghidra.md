@@ -1,7 +1,7 @@
 ---
 title: "Getting Started with Ghidra and FlareVM"
 author: Travis Mathison
-date: 2020-09-21 15:35:00 +0800
+date: 2020-09-21 15:35:00 -0700
 categories: [Blogging]
 tags: [flarevm, ghidra]
 ---

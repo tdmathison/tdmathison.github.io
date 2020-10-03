@@ -1,7 +1,7 @@
 ---
 title: "OSCE Review"
 author: Travis Mathison
-date: 2018-02-22 12:00:00 +0800
+date: 2018-02-22 12:00:00 -0700
 categories: [Blogging, Offensive-Security]
 tags: [offensive-security, osce, penetration-testing, hacking]
 ---

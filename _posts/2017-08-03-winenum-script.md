@@ -1,7 +1,7 @@
 ---
 title: Windows Enumeration Script
 author: Travis Mathison
-date: 2017-08-03 12:00:00 +0800
+date: 2017-08-03 12:00:00 -0700
 categories: [Blogging, Penetration-Testing]
 tags: [windows, enumeration, penetration-testing, hacking, script]
 ---

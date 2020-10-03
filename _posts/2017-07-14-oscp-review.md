@@ -1,7 +1,7 @@
 ---
 title: OSCP Review
 author: Travis Mathison
-date: 2017-07-14 12:00:00 +0800
+date: 2017-07-14 12:00:00 -0700
 categories: [Blogging, Offensive-Security]
 tags: [offensive-security, oscp, penetration-testing, hacking]
 ---
