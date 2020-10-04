@@ -34,6 +34,7 @@ The following are some locations where you can grab samples of malware for analy
 | MacOS Malware Encyclopedia | [https://macos.checkpoint.com/](https://macos.checkpoint.com/) |
 | Das Malwerk | [https://dasmalwerk.eu/](https://dasmalwerk.eu/) |
 | MalShare | [https://malshare.com/](https://malshare.com/) |
+| Malpedia | [https://malpedia.caad.fkie.fraunhofer.de/](https://malpedia.caad.fkie.fraunhofer.de/) |
 
 ### Network Packet Samples
 
