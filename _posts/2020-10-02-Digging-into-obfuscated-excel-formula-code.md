@@ -62,7 +62,7 @@ In an attempt to solve this problem I had two specific requirements:<br />
 1) Since specific cells were referenced by name such as $AB$50741 I needed to make sure I built a table were they could be referenced<br />
 2) I needed a way to start with a value in a given cell and then merge the content into the string by replacing the cell location text
 
-All the would be left is applying step 2 over and over until there are no more cell location strings to replace.
+All that would be left is applying step 2 over and over until there are no more cell location strings to replace.
 
 ### Dumping content into hashmap
 The first part is achieved by creating a hashmap and reading through all delimited data and adding it to the hashmap with the key being the formatted location of the cell that would be referenced in the formula code.
