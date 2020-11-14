@@ -84,8 +84,6 @@ The following is a list of additional scripts I use that aid in enhancing the us
 
 Some Ghidra Settings changes that can be adjusted from the CodeBrowser tool once a project is created:
 * Edit->Tool Options
-  * Listing Display
-    * Font -> Bold
   * ByteViewer
     * Highlight Cursor Line Color -> Yellow (or some other more visible color)
   * Listing Fields->Bytes Field
