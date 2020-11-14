@@ -86,6 +86,8 @@ Some Ghidra Settings changes that can be adjusted from the CodeBrowser tool once
 * Edit->Tool Options
   * ByteViewer
     * Highlight Cursor Line Color -> Yellow (or some other more visible color)
+  * Listing Fields->Address Field
+    * Show Block Name = Checked
   * Listing Fields->Bytes Field
     * Maximum Lines To Display = 1
   * Listing Fields->Cursor Text Highlight
