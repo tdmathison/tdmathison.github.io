@@ -2,8 +2,8 @@
 title: "Penetration Testing Process"
 author: Travis Mathison
 date: 2017-07-17 12:00:00 -0700
-categories: [Guide]
-tags: [hacking, penetration-testing, guide]
+categories: [Blogging, Penetration-Testing]
+tags: [hacking, penetration-testing]
 ---
 
 The following is a general guideline for how I would start to attack a machine.  I broke it down into enumeration, doing research on what I found, exploitation (either getting root or a low privilege), then attempting low-priv escalation.
