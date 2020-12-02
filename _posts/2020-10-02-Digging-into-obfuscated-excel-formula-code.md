@@ -215,7 +215,7 @@ EsNDtISBBnaCXk=https ://component[.]pw/wp-index.php
 Final: EsNDtISBBnaCXk=https ://component[.]pw/wp-index.php
 ```
 
-At the end, a dump of the final text strings is listed.  This is where you can find IoC's, Win32 calls, paths to executables that may be dropped, the C&C path that we see here (and I verified it calls out to with FakeNet running).
+At the end, a dump of the final text strings are listed.  This is where you can find IoC's, Win32 calls, paths to executables that may be dropped, the C&C path that we see here (and I verified it calls out to with FakeNet running).
 ```
 Final strings list:
 ===========================================
