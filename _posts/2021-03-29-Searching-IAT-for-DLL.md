@@ -40,4 +40,4 @@ Indexing files: 325098
 
 ## Source
 The script can be grabbed from the following location and used/modified as needed: <br/>
-[https://github.com/tdmathison/PythonScripts/blob/main/iat_search.py](https://github.com/tdmathison/PythonScripts/blob/main/iat_search.py)
+[https://github.com/tdmathison/HelperScripts/blob/master/iat_search.py](https://github.com/tdmathison/HelperScripts/blob/master/iat_search.py)
