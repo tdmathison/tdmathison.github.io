@@ -7,10 +7,13 @@ tags: [malware, iat]
 ---
 
 ## Intro
-With a given binary it is very simple to view the Import Address Table (IAT) and see what DLLs it imports and further, what functions within those DLLs.  In my case, I needed to do the opposite: I had a DLL that was known to be bad but needed to find if any binaries were importing the DLL.  I have no logs or additional information to work from and just the a known drive of files.
+With a given binary it is very simple to view the Import Address Table (IAT) and see what DLLs it imports and further, what functions are used within those DLLs.  In my case, I needed to do the opposite: I had a DLL that was known to be bad but needed to find if any binaries were importing that DLL.  I have no logs or additional information to work from and just the a known drive of files.
 
 This scenaraio resulted in writing up a little python script that performs the following:
-* Allows you to specify a root path to recursively search for files in, the extension of the file (my targets being `EXE` and `DLL`), and the name of the import DLL I was looking for within the Import Tables
+* Allows you to specify
+  * The root path to recursively search for files in
+  * The extension of the files to search for (my targets being `EXE` and `DLL`)
+  * The name of the import DLL to search for within the Import Table
 * The script searches for relevant files and attempt to open it as a `PE` file
 * It loops through the Import Address Table attempting to make a match on the DLL file name you are searching for
 * If found it will print the full path to the binary so you can grab it for further analysis
@@ -36,5 +39,5 @@ Indexing files: 325098
 ```
 
 ## Source
-The script can be grabbed from the following location and used/modified as needed:
+The script can be grabbed from the following location and used/modified as needed: <br/>
 [https://github.com/tdmathison/PythonScripts/blob/main/iat_search.py](https://github.com/tdmathison/PythonScripts/blob/main/iat_search.py)
