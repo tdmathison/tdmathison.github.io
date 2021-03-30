@@ -1,14 +1,14 @@
 # hidden files
 .*
+!.github
 
-# python compiled files
-*.pyc
-
-# jekyll debug
+# jekyll cache
 _site
-
-# yui-compressor
-*.jar
-
-# bundle cache
 vendor
+
+# rubygem
+*.gem
+
+# npm dependencies
+node_modules
+package-lock.json
