@@ -38,6 +38,7 @@ The following are some locations where you can grab samples of malware for analy
 | MalShare | [https://malshare.com/](https://malshare.com/) |
 | Malpedia | [https://malpedia.caad.fkie.fraunhofer.de/](https://malpedia.caad.fkie.fraunhofer.de/) |
 | TotalHash | [https://totalhash.cymru.com](https://totalhash.cymru.com) |
+| MalwareBazaar | [https://bazaar.abuse.ch/](https://bazaar.abuse.ch/) |
 
 ### Network Packet Samples
 
@@ -80,3 +81,12 @@ While there are tons of disassemblers and decompilers out there, the following l
 | Binary Ninja | [https://binary.ninja/](https://binary.ninja/) |
 | Radare2 | [https://rada.re/n/](https://rada.re/n/) |
 | Cutter | [https://cutter.re/](https://cutter.re/) |
+
+## Emulators
+There are several tools and frameworks that can help emulate the CPU and crawl a binary in an attempt to capture what the instructions are trying to do, what API calls it is making, etc.  They can be hit and miss and often give you a partial view of what is happening.  The information you can get, however, may be critical and substantial.
+
+| Name | Link |
+|:---|:----|
+| SpeakEasy | [https://github.com/fireeye/speakeasy](https://github.com/fireeye/speakeasy) |
+| Qiling Framework | [https://qiling.io/](https://qiling.io/)<br/>[https://docs.qiling.io/en/latest/install/](https://docs.qiling.io/en/latest/install/) |
+| x86Emulator | [https://github.com/AmrThabet/x86Emulator](https://github.com/AmrThabet/x86Emulator) |
