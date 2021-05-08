@@ -54,6 +54,12 @@ The following are some locations where you can grab samples of malware for analy
 | URLHause | [https://urlhaus.abuse.ch/browse/](https://urlhaus.abuse.ch/browse/) |
 | Zeltser | [https://zeltser.com/malicious-ip-blocklists/#](https://zeltser.com/malicious-ip-blocklists/#) |
 
+## Automated malware unpacking
+
+| Name | Link |
+|:---|:----|
+| OpenAnalysis UNPACME | [https://www.unpac.me/#/](https://www.unpac.me/#/) |
+
 ## Malware Techniques examples
 A few GitHub repos that I found of which have examples of anti-analysis techniques (Anti-Debug, Anti-VM, Anti-Analysis, etc). These can be useful to compile and see what it looks like in the disassembler when you run into them.  This also can help in seeing what types of techniques may be found in malware attempting to make reverse engineering more difficult for the analyst.
 
@@ -90,3 +96,11 @@ There are several tools and frameworks that can help emulate the CPU and crawl a
 | SpeakEasy | [https://github.com/fireeye/speakeasy](https://github.com/fireeye/speakeasy) |
 | Qiling Framework | [https://qiling.io/](https://qiling.io/)<br/>[https://docs.qiling.io/en/latest/install/](https://docs.qiling.io/en/latest/install/) |
 | x86Emulator | [https://github.com/AmrThabet/x86Emulator](https://github.com/AmrThabet/x86Emulator) |
+
+## Other Tools
+Additional tools that add or augment analysis.
+
+| Name | Link |
+|:---|:----|
+| BinDiff (for use by IDA Pro) | [https://zynamics.com/software.html](https://zynamics.com/software.html) |
+| BinDiff Quick Walkthrough | [https://www.youtube.com/watch?v=BLBjcZe-C3I](https://www.youtube.com/watch?v=BLBjcZe-C3I) |
