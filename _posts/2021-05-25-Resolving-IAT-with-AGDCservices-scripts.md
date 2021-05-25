@@ -46,7 +46,7 @@ When the plugin is invoked you will see the assembly in IDA Pro light up as seen
 ### IAT Resolution
 Since malware often resolves imports dynamically at runtime you will not see a properly populated import table during initial static analysis.  The idea here is to locate where the malware resolves the imports and builds an import table.  When you have located this, you can debug into the malware and right after the resolution has occurred you can take a snapshots of the RVA's of the imports.  This is the relative offsets from the image base to which they are located.
 
-To perform this action AGDCservices uses the following executable:
+To perform this action AGDCservices uses the following executable:<br/>
 [Dump_Labeled_Iat_Memory.exe](https://github.com/AGDCservices/Misc-Malware-Analysis-Tools/blob/main/Dump_Labeled_Iat_Memory.exe)
 
 #### The IDA Pro plugin to use this output
