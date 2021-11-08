@@ -1,5 +1,5 @@
 ---
-title: "COA@2.0.3 DanaBot Dropper"
+title: "NPM COA@2.0.3 DanaBot Dropper"
 author: Travis Mathison
 date: 2021-11-08 05:35:00 -0700
 categories: [Blogging, Malware-Analysis]
