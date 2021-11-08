@@ -118,7 +118,7 @@ if (opsys == _0x29286e(241)) opsys = _0x29286e(251); else {
 After I analyzed the javascript and updated the variables I produced the commented file below.
 
 **High level:**
-* Rotating array of fields
+* Rotating array
     * The script works by pre-creating an array of alphanumeric text fields some of which produce integers to be used in a long calculation
     * The script starts by performing this calculation with an expected result to make and if it fails it rotates the array by one and attempts again until it succeeds
     * The end result is the same array of fields but in a new order
