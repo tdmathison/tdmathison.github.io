@@ -132,8 +132,7 @@ const ptr_func3 = func3;
 (function (rotating_array, target_value) {
   const ptr_func3 = func3, ptr_rotating_array = rotating_array();
 
-  // NOTE: The double exclamation mark in JavaScript basically means convert to Boolean, invert, then invert again. I documented this on my blog for quick reference as I keep running into it
-  while (!![]) { // while([] != 0)
+  while (!![]) { // while(True)
     try {
       const result_value = parseInt(ptr_func3(239)) / 1 * (-parseInt(ptr_func3(250)) / 2) + parseInt(ptr_func3(247)) / 3 + -parseInt(ptr_func3(246)) / 4 * (parseInt(ptr_func3(245)) / 5) + -parseInt(ptr_func3(242)) / 6 * (-parseInt(ptr_func3(237)) / 7) + -parseInt(ptr_func3(248)) / 8 * (parseInt(ptr_func3(233)) / 9) + parseInt(ptr_func3(235)) / 10 + parseInt(ptr_func3(243)) / 11 * (parseInt(ptr_func3(244)) / 12);
       if (result_value === target_value) 
