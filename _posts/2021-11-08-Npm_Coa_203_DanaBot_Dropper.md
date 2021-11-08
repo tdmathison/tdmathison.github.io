@@ -41,6 +41,7 @@ Config extractors matched this secondary payload to be a DanaBot information ste
 
 ### IOC's
 **C2**
+
 | Name | Value |
 |:---|:----|
 | C2 | 185.106.123.228:443 |
@@ -49,6 +50,7 @@ Config extractors matched this secondary payload to be a DanaBot information ste
 | C2 | 185.117.90.36:443 |
 
 **MD5 hashes**
+
 | Name | Value |
 |:---|:----|
 | MD5 (compile.js) | accbf560283950ef17bb22164f7003ae |
