@@ -69,7 +69,7 @@ const _0x29286e=_0x3b9e;(function(_0x595213,_0x1c7f12){const _0x524030=_0x3b9e,_
 ```
 
 **Deobfuscation**<br/>
-I ran the above code through https://deobfuscate.io to help make more sense of it.  The code is still in an obfuscated state and needed to be understood better
+I ran the above code through [https://deobfuscate.io](https://deobfuscate.io) to help make more sense of it.  The code is still in an obfuscated state and needed to be understood better.
 ```javascript
 const _0x29286e = _0x3b9e;
 
@@ -124,6 +124,7 @@ After I analyzed the javascript and updated the variables I produced the comment
     * The end result is the same array of fields but in a new order
 * Detects whether it is running on MacOS, Windows, or Linux
 * If running on Windows it will execute `child_proccess.spawn("cmd.exe /c compile.bat")`
+
 ```javascript
 const ptr_func3 = func3;
 
