@@ -119,8 +119,8 @@ After I analyzed the javascript and updated the variables I produced the comment
 
 **High level:**
 * Rotating array
-    * The script works by pre-creating an array of alphanumeric text fields some of which produce integers to be used in a long calculation
-    * The script starts by performing this calculation with an expected result to make and if it fails it rotates the array by one and attempts again until it succeeds
+    * The script works by pre-creating an array of alphanumeric text, some of which produce integers to be used in a mathematical calculation
+    * The script starts by performing this calculation with an expected mathematical result and if it fails it rotates the array by one and attempts again until it succeeds
     * The end result is the same array of fields but in a new order
 * Detects whether it is running on MacOS, Windows, or Linux
 * If running on Windows it will execute `child_proccess.spawn("cmd.exe /c compile.bat")`
