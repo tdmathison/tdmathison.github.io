@@ -40,7 +40,7 @@ std::string & std::string::erase(unsigned int,unsigned int)
 
 which is much easier to read and understand.
 
-<img style="align:left" src="{{ site.url }}/assets/img/blogging/igor-tips-35png"/>
+<img style="align:left" src="{{ site.url }}/assets/img/blogging/igor-tips-35.png"/>
 
 
 ### #18 Decompiler and global cross-references
