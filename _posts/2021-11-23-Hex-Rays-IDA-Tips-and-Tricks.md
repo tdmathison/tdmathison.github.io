@@ -40,6 +40,9 @@ std::string & std::string::erase(unsigned int,unsigned int)
 
 which is much easier to read and understand.
 
+<img style="align:left" src="{{ site.url }}/assets/img/blogging/igor-tips-35png"/>
+
+
 ### #18 Decompiler and global cross-references
 **Global cross-references**<br/>
 If you have a well-analyzed database with custom types used by the program and properly set up function prototypes, you can ask the decompiler to analyze all functions and build a list of cross-references to a structure field, an enum member or a whole local type. The default hotkey is `Ctrl-Alt-X`.
