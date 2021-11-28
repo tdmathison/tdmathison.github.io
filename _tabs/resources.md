@@ -67,6 +67,7 @@ A few GitHub repos that I found of which have examples of anti-analysis techniqu
 |:---|:----|
 | alichtman: malware-techniques | [https://github.com/alichtman/malware-techniques](https://github.com/alichtman/malware-techniques) |
 | LordNoteworthy: al-khaser | [https://github.com/LordNoteworthy/al-khaser](https://github.com/LordNoteworthy/al-khaser) |
+| Ultimate Anti-Reversing Reference | [The_Ultimate_Anti-Reversing_Reference.pdf](https://anti-reversing.com/Downloads/Anti-Reversing/The_Ultimate_Anti-Reversing_Reference.pdf) |
 
 ## Malware Analysis Platforms
 These are images, VM's, or scripts to build out a VM that is suitable to reverse engineer or otherwise deal with analyzing malware.  Granted, you can build your own (I did for a long time) but being able to automate the creation of an environment in minimal time has proven to be more valuable.
