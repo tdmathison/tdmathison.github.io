@@ -14,5 +14,5 @@ Since then, I became a professional programmer in a variety of languages from C/
 ## Later
 In more recent years I moved into full Cybersecurity work.  I've been in positions where I have been wearing all the hats in small Cybersecurity teams and have now moved into more focused Computer Security Incident Response Team (CSIRT) work.
 
-## Incident Response and Malware Reverse Engineering
-My focus now is on the CSIRT process and becoming a better reverse engineer of Malware.  The intent of this blog site is to stay focused on that specifically and to post my notes and learnings along the way as I progress.
+## Malware Reverse Engineering and Threat Research
+My focus now is on threat research and becoming a better reverse engineer of Malware.  The intent of this blog site is to stay focused on that specifically and to post my notes and learnings along the way as I progress.
