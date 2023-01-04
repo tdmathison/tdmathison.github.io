@@ -1,5 +1,5 @@
 ---
-title: "Resolving IDA Pro “sp-analysis failed” Error"
+title: "Resolving IDA Pro sp-analysis failed Error"
 date: 2023-01-04 04:45:00 -0700
 categories: [Blogging]
 tags: [ida, tips-and-tricks]
