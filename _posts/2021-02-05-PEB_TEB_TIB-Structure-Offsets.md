@@ -1,6 +1,5 @@
 ---
 title: "PEB/TEB/TIB Structure Offsets"
-author: Travis Mathison
 date: 2021-02-05 12:10:00 -0700
 categories: [Blogging, Malware-Analysis]
 tags: [malware, assembly]

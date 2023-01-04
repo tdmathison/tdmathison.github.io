@@ -1,6 +1,5 @@
 ---
 title: "Penetration Testing Process"
-author: Travis Mathison
 date: 2017-07-17 12:00:00 -0700
 categories: [Blogging, Penetration-Testing]
 tags: [hacking, penetration-testing]

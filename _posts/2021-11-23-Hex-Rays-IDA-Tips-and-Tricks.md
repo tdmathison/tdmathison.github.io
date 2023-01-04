@@ -1,6 +1,5 @@
 ---
 title: "Hex-Rays IDA Tips and Tricks"
-author: Travis Mathison
 date: 2021-11-23 12:07:00 -0700
 categories: [Blogging, Malware-Analysis]
 tags: [ida, tips-and-tricks]

@@ -1,6 +1,5 @@
 ---
 title: "Resolving IAT with AGDCservices Scripts"
-author: Travis Mathison
 date: 2021-05-25 11:15:00 -0700
 categories: [Blogging, Malware-Analysis]
 tags: [malware, hermes, ransomware, debugging, ida, ghidra, memory, techniques]

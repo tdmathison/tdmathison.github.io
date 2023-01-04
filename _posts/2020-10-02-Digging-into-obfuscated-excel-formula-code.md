@@ -1,6 +1,5 @@
 ---
 title: "Digging into obfuscated excel formula code"
-author: Travis Mathison
 date: 2020-10-02 21:33:00 -0700
 categories: [Blogging, Malware-Analysis]
 tags: [malware, excel, scripts, macros, phishing]

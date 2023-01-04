@@ -1,6 +1,5 @@
 ---
 title: "String and function hiding techniques"
-author: Travis Mathison
 date: 2021-04-12 12:10:00 -0700
 categories: [Blogging, Malware-Analysis]
 tags: [malware, emotet, debugging, ida, ghidra, memory, techniques, stack, obfuscation, ntdll.dll, kernel32.dll]

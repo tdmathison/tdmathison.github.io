@@ -1,6 +1,5 @@
 ---
 title: "Searching IAT for DLLs"
-author: Travis Mathison
 date: 2021-03-29 10:34:00 -0700
 categories: [Blogging, Malware-Analysis]
 tags: [malware, iat]
