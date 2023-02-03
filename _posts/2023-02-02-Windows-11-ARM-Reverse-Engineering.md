@@ -36,7 +36,7 @@ That said, I have found the below steps to work in stopping Windows Defender fro
 * Run `gpedit.msc`
   * Click Computer Configuration -> Administrative Templates -> Windows Components -> Microsoft Defender Antivirus
   * Set `Turn off Microsoft Defender Antivirus` to enabled
-* Run `msfconfig`
+* Run `msconfig`
   * Services -> Disable Windows Defender Advanced Threat Protection Service
   * Services -> Disable Windows Defender Firewall
   * Services -> Microsoft Defender Antivirus Network Inspection Service
