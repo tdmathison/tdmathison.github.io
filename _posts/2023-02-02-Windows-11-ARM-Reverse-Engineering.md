@@ -42,7 +42,7 @@ That said, I have found the below steps to work in stopping Windows Defender fro
   * Services -> Microsoft Defender Antivirus Network Inspection Service
   * Restart Windows
 
-NOTE: The Windows Defender services still seem to be running after the reboot, however the services seem to not be working when viewing through Security Center.  
+NOTE: You will notice that some Windows Defender services still seem to be running after the reboot, however, when you open the Security Center you will see that it is in a non-operable state (which is what we want).
 
 Extra setting for yet another annoying thing Microsoft has done
 * Add back the full right-click menu so you don't have to click "Show more options"
