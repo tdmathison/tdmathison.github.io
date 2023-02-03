@@ -51,4 +51,4 @@ Extra setting for yet another annoying thing Microsoft has done
 ## FlareVM Install
 Once the above steps have been performed you'll be able to carry on with installing the FlareVM packages to turn this into your new machine to perform reverse engineering on.
 
-https://github.com/mandiant/flare-vm
+[https://github.com/mandiant/flare-vm](https://github.com/mandiant/flare-vm)
