@@ -48,6 +48,31 @@ Extra setting for yet another annoying thing Microsoft has done
 * Add back the full right-click menu so you don't have to click "Show more options"
   * `reg add HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32 /ve /d "" /f`
 
+---
+
+## UPDATE
+
+The above steps no longer seem to work for new Windows 11 installs.  There is a trick to remove directory permissions that non-optimal but continues to work.
+
+### Quick steps
+* Reboot to safe mode
+  * msconfig->boot options->safe boot
+  * reboot
+* Remove permissions from Windows Defender directory
+  * Navigate to c:\ProgramData\Microsoft\
+  * Right-click->Properties->Security tab on "Windows Defender" directory
+  * Change owner to "Administrator"
+  * Remove all other permission entries
+* Reboot back into normal mode
+  * msconfig->boot options->uncheck safe boot
+  * reboot
+
+### Reference
+* OALabs video that explains the directory permission trick
+  * https://www.youtube.com/watch?v=0eR8yrDLV5M
+
+
+
 ## FlareVM Install
 Once the above steps have been performed you'll be able to carry on with installing the FlareVM packages to turn this into your new machine to perform reverse engineering on.
 
