@@ -5,13 +5,11 @@ order: 5
 ---
 
 <style>
-/* Compact table look */
 #scripts-table { width: 100%; border-collapse: collapse; }
 #scripts-table th, #scripts-table td { padding: 0.4rem 0.6rem; border-bottom: 1px solid #ddd; }
 #scripts-table th { text-align: left; }
 details summary { cursor: pointer; color: #007acc; }
 details[open] summary { color: #005f99; }
-/* Shrink the details so it stays in-row */
 details { margin: 0; }
 </style>
 
@@ -79,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const categories = row.dataset.categories;
         const match = cat === 'all' || categories.includes(cat);
         row.style.display = match ? '' : 'none';
-        codeRows[i].style.display = 'none'; // collapse on filter
+        codeRows[i].style.display = 'none';
         toggleButtons[i].textContent = 'View';
       });
     });
@@ -156,7 +154,6 @@ td.rouge-code {
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Category filtering
   const buttons = document.querySelectorAll('#category-filters button');
   const rows    = document.querySelectorAll('#scripts-table tbody tr');
 
