@@ -1,7 +1,7 @@
 ---
 title: About
 icon: fas fa-info-circle
-order: 5
+order: 7
 ---
 <p id="about-me-image">
     <img src="{{ site.url }}/assets/img/profile.jpg" width="300px" />
