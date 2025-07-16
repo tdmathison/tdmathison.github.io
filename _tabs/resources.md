@@ -9,6 +9,22 @@ order: 3
 
 ---
 
+## Favorite blogs
+The following sites often contain decent malware write-ups and information.
+
+| Name | Link |
+|:---|:----|
+| Unit42 Blog | [https://unit42.paloaltonetworks.com/category/threat-research](https://unit42.paloaltonetworks.com/category/threat-research) |
+| Sekoia Blog | [https://blog.sekoia.io/category/threat-research](https://blog.sekoia.io/category/threat-research) |
+| Mandiant Blog | [https://cloud.google.com/blog/topics/threat-intelligence](https://cloud.google.com/blog/topics/threat-intelligence) |
+| CrowdStrike Cyber Security Blog | [https://www.crowdstrike.com/en-us/blog](https://www.crowdstrike.com/en-us/blog) |
+| ProofPoint Blog | [https://www.proofpoint.com/us/blog](https://www.proofpoint.com/us/blog) |
+| Resecurity Blog | [https://www.resecurity.com/blog](https://www.resecurity.com/blog) |
+| CheckPoint Blog | [https://research.checkpoint.com](https://research.checkpoint.com) |
+| Securonix Blog | [https://www.securonix.com/blog?_categories=threat-research](https://www.securonix.com/blog?_categories=threat-research) |
+| LevelBlue Blog | [https://levelblue.com/blogs/labs-research](https://levelblue.com/blogs/labs-research) |
+| SentinelOne Blog | [https://www.sentinelone.com/blog](https://www.sentinelone.com/blog) |
+
 ## Malware Detonation sandboxes
 The following are a few malware detonation sandboxes I have used and have been valuable:
 
