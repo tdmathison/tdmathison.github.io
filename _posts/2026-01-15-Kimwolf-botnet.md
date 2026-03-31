@@ -162,9 +162,9 @@ Even if you can’t see DNS (DoT) or payloads (TLS), flow metadata is enough to 
   * Hosting/ASN reputation
 
 ## Finding new samples
-The following Yara rules may be useful to track down new samples.
+**The following Yara rules may be useful to track down new samples.**
 
-```yara
+```c
 rule Kimwolf_Hunt_Domains_Protocol_Markers
 {
   meta:
@@ -193,9 +193,9 @@ rule Kimwolf_Hunt_Domains_Protocol_Markers
 }
 ```
 
-V4 samples include some specific strings that may aid in discovery.
+**V4 samples include some specific strings that may aid in discovery.**
 
-```yara
+```c
 rule Kimwolf_V4_Console_Strings
 {
   meta:
@@ -212,9 +212,9 @@ rule Kimwolf_V4_Console_Strings
 }
 ```
 
-Kimwolf APK / dropper artifacts (strings + ENS pivot).
+**Kimwolf APK / dropper artifacts (strings + ENS pivot).**
 
-```yara
+```c
 rule Kimwolf_Android_APK_Hunt_Core
 {
   meta:
@@ -237,9 +237,9 @@ rule Kimwolf_Android_APK_Hunt_Core
 }
 ```
 
-Kimwolf / Aisuru Android “systemservice” style droppers (package naming pivot).
+**Kimwolf / Aisuru Android “systemservice” style droppers (package naming pivot).**
 
-```yara
+```c
 rule Kimwolf_Aisuru_SystemService_APK_Hunt
 {
   meta:
@@ -257,10 +257,10 @@ rule Kimwolf_Aisuru_SystemService_APK_Hunt
 ```
 
 ## References
-* https://blog.xlab.qianxin.com/kimwolf-botnet-en/
-* https://krebsonsecurity.com/2026/01/who-benefited-from-the-aisuru-and-kimwolf-botnets/
-* https://threatfox.abuse.ch/browse/tag/kimwolf/
-* https://malpedia.caad.fkie.fraunhofer.de/details/apk.kimwolf
+* [https://blog.xlab.qianxin.com/kimwolf-botnet-en/](https://blog.xlab.qianxin.com/kimwolf-botnet-en/)
+* [https://krebsonsecurity.com/2026/01/who-benefited-from-the-aisuru-and-kimwolf-botnets/](https://krebsonsecurity.com/2026/01/who-benefited-from-the-aisuru-and-kimwolf-botnets/)
+* [https://threatfox.abuse.ch/browse/tag/kimwolf/](https://threatfox.abuse.ch/browse/tag/kimwolf/)
+* [https://malpedia.caad.fkie.fraunhofer.de/details/apk.kimwolf](https://malpedia.caad.fkie.fraunhofer.de/details/apk.kimwolf)
 
 ## Indicators of Compromise
 
