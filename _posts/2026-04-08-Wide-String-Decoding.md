@@ -17,11 +17,9 @@ There is an IDA Pro script that you can call that will run FLOSS against the bin
 * Once the files are copied to your machine where IDA Pro can get to them you can execute the script file (`idaplugin.py`) via `File->Script file...`
 
 **Results**<br/>
-This works in many cases such as below:
+This works in many cases such as below (example of one of the successfully decoded strings output in the IDA Pro output console).
 
-```bash
-[INFO] decoded string for function call at 0x140007c56: User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) WinHttpClient/1.0	(idaplugin:apply_decoded_strings)
-```
+`[INFO] decoded string for function call at 0x140007c56: User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) WinHttpClient/1.0	(idaplugin:apply_decoded_strings)`
 
 Double clicking on the function call location `0x140007c56` (in this case) will take you to that location in IDA where it has added it as a comment at the point of the call to `sub-140007FB0`.
 
