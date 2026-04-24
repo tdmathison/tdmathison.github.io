@@ -53,8 +53,8 @@ There are a few reasons it fits particularly well in a reverse engineering lab:
 * Model flexibility
   * You can swap models depending on your use case without changing your tooling
 
-## Model Selection (What Actually Works for RE)
-Not all models are equal for reverse engineering.
+## Model Selection
+Not all models are equal for reverse engineering (and there are limits to small models).
 
 You want models that:
 * Understand code reasonably well
@@ -67,7 +67,8 @@ Good starting points
 
 | Model | Description |
 |:---|:----|
-| Qwen2.5-Coder (7B / 14B) | * Very strong for code reasoning<br/>* Good balance of speed vs quality |
+| Qwen2.5-Coder (7B / 14B) | * Can perform some code reasoning<br/>* Good balance of speed vs quality |
+| deepseek-coder:6.7b | * May be better than Qwen for pseudo-C reasoning |
 | Phi-4  | * Lightweight and surprisingly capable<br/>* Good for quick summaries and scripting tasks |
 | Mistral / Mistral-Nemo | * Solid general-purpose reasoning<br/>* Works well when code + logic are mixed |
 | Gemma 2 (9B) | * Another good general-purpose option |
@@ -100,7 +101,7 @@ Once installed, verify it’s working:
 ollama --version
 ollama ps
 ```
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/00.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/00.png"/><br/>
 Figure 1: Running and verifying the model</div><br />
 
 ### 2. Pull a Model
@@ -110,7 +111,7 @@ ollama pull qwen2.5-coder:7b
 ollama list
 ```
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/01.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/01.png"/><br/>
 Figure 2: Downloading ollama model</div><br />
 
 Test for proper responses:
@@ -118,7 +119,7 @@ Test for proper responses:
 curl http://127.0.0.1:11434/api/tags
 curl http://127.0.0.1:11434/v1/models
 ```
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/02.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/02.png"/><br/>
 Figure 3: Testing queries against the model</div><br />
 
 ### 3. Expose Ollama to Your Lab Network
@@ -185,7 +186,7 @@ Invoke-RestMethod -Method Post `
 -Body $body
 ```
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/03.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/03.png"/><br/>
 Figure 4: Testing connetivity from FlareVM</div><br />
 
 
@@ -208,7 +209,7 @@ python -m pip install -r .\requirements.txt
 ```
 NOTE: If you have multiple python interpreters installed on the FlareVM make sure you know which one IDA Pro is using.  You can get a hint of which one by using the `idapyswitch.exe`.
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/04.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/04.png"/><br/>
 Figure 5: Using idapyswitch.exe to determine python interpreter used</div><br />
 
 #### Configuration updates
@@ -218,7 +219,7 @@ There are a few changes you need to make to support the use of the local Ollama 
 1. Open the following file `<IDA_DIR>\plugins\gepetto\models\openai.py`
 2. Add the local model name into the existing ones to make it available in the plugin:
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/05.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/05.png"/><br/>
 Figure 6: Adding Qwen2.5-Coder model as an option</div><br />
 
 **gepetto.py adjustments**
@@ -226,18 +227,18 @@ Figure 6: Adding Qwen2.5-Coder model as an option</div><br />
 4. Add the new model name, openai key, and the URL to the localhost service it is exposed on
    1. NOTE: The Ollama API key for the local instance is `"ollama"` by default
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/06.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/06.png"/><br/>
 Figure 7: Adding local ollama instance information to the plugin config</div><br />
 
 ### Testing the plugin in IDA Pro
 Upon starting IDA Pro you should see the Gepetto window pane upon opening a binary. If configured correctly we should see the new model name as the default at the bottom.
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/07.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/07.png"/><br/>
 Figure 8: Default view of Gepetto plugin pane with local model name selected</div><br />
 
 We can now navigate to a function and utilize the Gepetto menu to perform several default prompts to help explain the decompilation better.
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/08.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/08.png"/><br/>
 Figure 9: Gepetto plugin default prompts</div><br />
 
 ## Limitations
@@ -257,17 +258,17 @@ You can experiment with other models that may perform annotation operations bett
 
 An example would be that this:
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/09.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/09.png"/><br/>
 Figure 10: A function to explain</div><br />
 
 Turns into the following after running the explain/comment prompts.
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/10.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/10.png"/><br/>
 Figure 11: A function once commenting has been added from the model</div><br />
 
 Further, a markdown document can be created with a Python representation:
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260422_0/11.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/11.png"/><br/>
 Figure 12: Generated python from the pseudo-C</div><br />
 
 ## Conclusion
