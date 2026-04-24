@@ -32,7 +32,7 @@ This post walks through building a setup where:
 * IDA Pro connects to them like it would OpenAI
 * Everything stays inside your lab
 
-## What is Ollama (and Why Use It)
+## What is Ollama
 Ollama is essentially a lightweight local runtime for large language models.
 
 Think of it as:
