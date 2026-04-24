@@ -75,7 +75,7 @@ Good starting points
 
 ## Architecture Overview
 The setup I landed on looks like this:
-```
+```text
 macOS (M2 MacBook Pro)
   └── Ollama (local model server using Apple Silicon acceleration)
          │
