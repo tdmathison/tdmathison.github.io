@@ -107,7 +107,7 @@ Figure 1: Running and verifying the model</div><br />
 ### 2. Pull a Model
 Pick a model to start with:
 ```bash
-ollama pull qwen2.5-coder:7b
+ollama pull qwen3:8b
 ollama list
 ```
 
