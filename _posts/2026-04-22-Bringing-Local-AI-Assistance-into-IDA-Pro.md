@@ -8,11 +8,11 @@ tags: [ida, ollama, gepetto, ai, plugin]
 ## Summary
 Reverse engineering is still a very manual craft.
 
-Even with tools like IDA Pro and Binary Ninja doing heavy lifting on disassembly and decompilation, the actual thinking is still on you—understanding control flow, reconstructing intent, tracking data transformations, and making sense of what is often intentionally confusing code.
+Even with tools like IDA Pro and Binary Ninja doing heavy lifting on disassembly and decompilation, the actual thinking is still on you.  Understanding control flow, reconstructing intent, tracking data transformations, and making sense of what is often intentionally confusing code.
 
 That’s where local AI starts to become interesting to assist in making sense of confusing assembly or decompilation.
 
-Used correctly, an LLM can:
+**Used correctly, an LLM can:**
 * Quickly summarize large functions so you know where to focus
 * Suggest meaningful variable/function names based on behavior
 * Help reason through decryption or parsing logic
@@ -21,13 +21,13 @@ Used correctly, an LLM can:
 
 The key point: **you stay in control of the analysis**. The model just helps reduce the cognitive overhead.
 
-There’s also a major constraint in our field:
+**There’s also a major constraint in our field:**
 * You’re often working with sensitive samples
 * You don’t want to send binaries, configs, or proprietary telemetry to external APIs
 
 That’s why running models **locally** is such a strong fit for malware analysis.
 
-This post walks through building a setup where:
+**This post walks through building a setup where:**
 * AI models run locally on your machine (or lab host)
 * IDA Pro connects to them like it would OpenAI
 * Everything stays inside your lab
