@@ -222,8 +222,8 @@ There are a few changes you need to make to support the use of the local Ollama 
 <div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260424_0/05.png"/><br/>
 Figure 6: Adding Qwen2.5-Coder model as an option</div><br />
 
-**gepetto.py adjustments**
-3. Open the following file `<IDA_DIR>\plugins\gepetto.py`
+**config.ini adjustments**
+3. Open the following file `<IDA_DIR>\plugins\gepetto\config.ini`
 4. Add the new model name, openai key, and the URL to the localhost service it is exposed on
    1. NOTE: The Ollama API key for the local instance is `"ollama"` by default
 
