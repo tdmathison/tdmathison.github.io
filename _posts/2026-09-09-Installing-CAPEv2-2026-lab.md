@@ -655,8 +655,8 @@ virsh snapshot-create-as \
 ```
 
 If you receive the following error, you will need to convert the image.
-> [!CAUTION]
 > error: Operation not supported: internal snapshots of a VM with pflash based firmware require QCOW2 nvram format
+{: .prompt-warning }
 
 If required, shut the VM down:
 ```bash
