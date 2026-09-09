@@ -8,9 +8,9 @@ tags: [cape, sandbox]
 ## 2026 Lab work
 > [!NOTE] This is part of multiple install guides that I have made as I built out a new personal lab environment.<br/>
 > The following diagram shows a high-level view of the pipeline being built out.<br/>
-> * Step 1: [Installing InetSim (2026 lab)]()
-> * Step 2: [Installing CAPEv2 sandbox (2026 lab)]()
-> * Step 3: [Installing AssemblyLine4 (2026 lab)]()
+> * Step 1: [Installing InetSim (2026 lab)](https://www.travismathison.com/posts/Installing-InetSim-2026-lab/)
+> * Step 2: [Installing CAPEv2 sandbox (2026 lab)](https://www.travismathison.com/posts/Installing-CAPEv2-2026-lab/)
+> * Step 3: [Installing AssemblyLine4 (2026 lab)](https://www.travismathison.com/posts/Installing-AssemblyLine4-2026-lab/)
 
 <details>
 <summary>Click to expand diagram</summary>
@@ -516,8 +516,8 @@ The CAPE agent is a small HTTP service running **inside Windows**
 ### Install 32-bit Python interpreter
 Inside the Windows 10 `cuckoo1` VM, install a **32-bit Python 3.8.2** interpreter. During install, enable “Add Python to PATH.”
 
-Download the 32-bit download from:
-https://www.python.org/downloads/windows/
+Download the 32-bit download from:<br/>
+[https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
 
 >[!WARNING]
 >You need to install the Python 3.8.2 (x86) installer and not the latest due to compatibility issues with CAPEv2. If you install the latest you will likely have issues with the samples even running.
@@ -578,7 +578,7 @@ apev2@capev2:/opt/CAPEv2/agent$ curl http://192.168.122.105:8000
 
 ### Install software
 1. Install the software baseline you actually want malware to encounter—browser, Office components if needed, archive tools, PDF reader, common runtimes, etc.
-	1. Install Chocolately (https://chocolatey.org/install)
+	1. Install Chocolately ([https://chocolatey.org/install](https://chocolatey.org/install))
 	2. choco install -y googlechrome firefox 7zip notepadplusplus vlc adobereader winscp putty git python jre8 dotnetfx vcredist140 zoom everything
 	3. Deploy Office LTSC 2024
 		1. [https://learn.microsoft.com/en-us/office/ltsc/2024/deploy](https://learn.microsoft.com/en-us/office/ltsc/2024/deploy)
@@ -988,7 +988,7 @@ sudo systemctl restart cape-processor
 
 
 ## First end-to-end analysis
-Navigate to http://192.168.190.131:8000/
+Navigate to [http://192.168.190.131:8000/](http://192.168.190.131:8000/)
 Submit a few samples to make sure it can process them.
 <div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_1/00.png"/><br/>
 Figure 1: CAPE sandbox start page</div><br />
@@ -1025,8 +1025,8 @@ sudo -u cape env POETRY_CACHE_DIR=/opt/CAPEv2/.cache/pypoetry \
 ### CAPE-parsers
 CAPE core and community parsers. Since November 2024, malware configuration parsers were moved out of CAPEv2 core into this dedicated repository/package.
 
-GitHub
-https://github.com/CAPESandbox/CAPE-parsers
+GitHub<br/>
+[https://github.com/CAPESandbox/CAPE-parsers](https://github.com/CAPESandbox/CAPE-parsers)
 
 These parsers are already installed with CAPE sandbox.
 
