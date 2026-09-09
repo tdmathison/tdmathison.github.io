@@ -169,11 +169,12 @@ This guide walks through installing CAPEv2 onto an Ubuntu 24.04 LTS VM.
 
 ## Ubuntu Version
 The CAPEv2 sandbox wants the 24.04 LTS version of Ubuntu and not the latest.  Install and fully patch version 24.04 LTS that can be downloaded from here:
-* [https://ubuntu.com/download/alternative-downloads](https://ubuntu.com/download/alternative-downloads)
+[https://ubuntu.com/download/alternative-downloads](https://ubuntu.com/download/alternative-downloads)
 
 ## VM's Virtualization Engine
 Make sure that the VM has the "Virtualize Intel VT-x/EPT" checkbox selected.
-![[Pasted image 20260824221519.png]]
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_1/00.png"/><br/>
+Figure 1: VMware VT-x setting</div><br />
 
 ## Update kernel to specific version
 >MongoDB 8.0 has a documented incompatibility with Linux kernels **6.19 through 7.0.13**. MongoDB deliberately detects those kernels and refuses to start because of a TCMalloc incompatibility. Kernel **7.0.14+** fixes it.
@@ -992,12 +993,12 @@ sudo systemctl restart cape-processor
 ## First end-to-end analysis
 Navigate to [http://192.168.190.131:8000/](http://192.168.190.131:8000/)
 Submit a few samples to make sure it can process them.
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_1/00.png"/><br/>
-Figure 1: CAPE sandbox start page</div><br />
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_1/01.png"/><br/>
+Figure 2: CAPE sandbox start page</div><br />
 
 It appears to be working after submitting the first two samples.
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_1/01.png"/><br/>
-Figure 2: CAPE sandbox successful runs</div><br />
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_1/02.png"/><br/>
+Figure 3: CAPE sandbox successful runs</div><br />
 
 ## CAPEv2 Additions
 ### CAPE Community
