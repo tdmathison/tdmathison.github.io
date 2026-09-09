@@ -361,10 +361,10 @@ Protect `.env`
 chmod 600 .env
 ```
 
->[!info]
 > About `DOMAIN=assemblyline.local`
 > * For my local instance I am keeping it the default and we'll create the self-signed certificate for this address.
 > * We will later create a /etc/hosts entry to map the name to the IP
+{: .prompt-tip }
 
 ### Generate the HTTPS certificate
 ```bash

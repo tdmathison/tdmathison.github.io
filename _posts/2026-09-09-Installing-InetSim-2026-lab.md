@@ -168,19 +168,19 @@ tags: [inetsim]
 This guide walks through installing InetSim onto an Ubuntu 26.04 LTS VM.
 
 ## Download Ubuntu
-1. Download, Install, and patch Ubuntu 26.04 LTS from the Canonical site.
+Download, Install, and patch Ubuntu 26.04 LTS from the Canonical site.
 
 ## Setup network
-1. Create a new vmnet2 with the following configuration.
+Create a new vmnet2 with the following configuration.
 
 <div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_0/00.png"/><br/>
 Figure 1: VMware vmnet setup</div><br />
 
-2. Add a new NIC to the InetSim VM as shown below.
+Add a new NIC to the InetSim VM as shown below.
 <div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_0/01.png"/><br/>
 Figure 2: VMware new network adapter settings</div><br />
 
-3. The following config file should be updated to the following.
+The following config file should be updated to the following.
 ```yaml
 sudo cat /etc/netplan/01-network-manager-all.yaml 
 # Let NetworkManager manage all devices on this system
@@ -195,7 +195,7 @@ network:
         - 10.10.10.2/24
 ```
 
-4. Run the following commands
+Run the following commands
 
 ```bash
 sudo netplan generate
@@ -203,7 +203,7 @@ sudo netplan apply
 ```
 
 ## Install InetSim
-1. Run the following commands
+Run the following commands
 
 ```bash
 sudo apt update
@@ -216,21 +216,21 @@ grep -vE '^\s*(#|$)' /etc/inetsim/inetsim.conf
 ```
 
 ## Configure INetSim deliberately for this topology
-1. Back up the original configuration and then edit original
+Back up the original configuration and then edit original
 
 ```bash
 sudo cp /etc/inetsim/inetsim.conf /etc/inetsim/inetsim.conf.orig
 sudo vim /etc/inetsim/inetsim.conf
 ```
 
-1. Find these settings and configure them as follows. If they're commented out, uncomment them
+Find these settings and configure them as follows. If they're commented out, uncomment them
 
 ```bash
 service_bind_address 10.10.10.2
 dns_default_ip 10.10.10.2
 ```
 
-1. Run the following commands to ensure inetsim is using the new configuration
+Run the following commands to ensure inetsim is using the new configuration
 
 ```bash
 sudo systemctl restart inetsim
@@ -242,13 +242,13 @@ There is an issue is that INetSim 1.3.2 was written around an older `Net::DNS` A
 
 The reliable fix is to install an older compatible `Net::DNS` version specifically for INetSim, rather than trying to adapt ten-year-old INetSim internals to a 2026 Perl module API.
 
-1. Install `cpanm`
+Install `cpanm`
 
 ```bash
 sudo apt install cpanminus
 ```
 
-1. You dont want to overwrite Ubuntu's system `Net::DNS 1.54` globally. Instead, install a private Perl library for INetSim:
+You dont want to overwrite Ubuntu's system `Net::DNS 1.54` globally. Instead, install a private Perl library for INetSim:
 
 ```bash
 sudo mkdir -p /opt/inetsim-perl
@@ -257,7 +257,7 @@ sudo cpanm --local-lib=/opt/inetsim-perl \
   https://cpan.metacpan.org/authors/id/N/NL/NLNETLABS/Net-DNS-1.37.tar.gz
 ```
 
-1. Update DNS.pm
+Update DNS.pm
 
 ```bash
 sudo cp /usr/share/perl5/INetSim/DNS.pm /usr/share/perl5/INetSim/DNS.pm.bak
@@ -273,7 +273,7 @@ $server->start_server(0);
 $server->main_loop;
 ```
 
-4. Restart inetsim
+Restart inetsim
 
 ```bash
 sudo systemctl daemon-reload
