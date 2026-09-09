@@ -419,14 +419,14 @@ Figure 1: AssemblyLine4 logon page</div><br />
 ### Submit a benign sample to test
 I submitted the `su` GNU/Linux application.
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_1/01.png"/><br/>
-Figure 22: AssemblyLine4 sample submit page</div><br />
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_2/01.png"/><br/>
+Figure 2: AssemblyLine4 sample submit page</div><br />
 
 We can see that it completes the ingest of the file and processes it.  In the details view you can see all of the static analysis it performed.
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_1/02.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_2/02.png"/><br/>
 Figure 3: AssemblyLine4 submissions view</div><br />
 
-<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_1/03.png"/><br/>
+<div align="center"><img style="align:left" src="{{ site.url }}/assets/img/20260909_2/03.png"/><br/>
 Figure 4: AssemblyLine4 submission file details</div><br />
 
 ## CAPE Integration
