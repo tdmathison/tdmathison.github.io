@@ -195,6 +195,7 @@ network:
 ```
 
 4. Run the following commands
+
 ```bash
 sudo netplan generate
 sudo netplan apply
@@ -202,6 +203,7 @@ sudo netplan apply
 
 ## Install InetSim
 1. Run the following commands
+
 ```bash
 sudo apt update
 sudo apt install inetsim
@@ -214,18 +216,21 @@ grep -vE '^\s*(#|$)' /etc/inetsim/inetsim.conf
 
 ## Configure INetSim deliberately for this topology
 1. Back up the original configuration and then edit original
+
 ```bash
 sudo cp /etc/inetsim/inetsim.conf /etc/inetsim/inetsim.conf.orig
 sudo vim /etc/inetsim/inetsim.conf
 ```
 
-2. Find these settings and configure them as follows. If they're commented out, uncomment them
+1. Find these settings and configure them as follows. If they're commented out, uncomment them
+
 ```bash
 service_bind_address 10.10.10.2
 dns_default_ip 10.10.10.2
 ```
 
-3. Run the following commands to ensure inetsim is using the new configuration
+1. Run the following commands to ensure inetsim is using the new configuration
+
 ```bash
 sudo systemctl restart inetsim
 sudo systemctl status inetsim --no-pager -l
@@ -237,11 +242,13 @@ There is an issue is that INetSim 1.3.2 was written around an older `Net::DNS` A
 The reliable fix is to install an older compatible `Net::DNS` version specifically for INetSim, rather than trying to adapt ten-year-old INetSim internals to a 2026 Perl module API.
 
 1. Install `cpanm`
+
 ```bash
 sudo apt install cpanminus
 ```
 
-2. You dont want to overwrite Ubuntu's system `Net::DNS 1.54` globally. Instead, install a private Perl library for INetSim:
+1. You dont want to overwrite Ubuntu's system `Net::DNS 1.54` globally. Instead, install a private Perl library for INetSim:
+
 ```bash
 sudo mkdir -p /opt/inetsim-perl
 
@@ -249,7 +256,8 @@ sudo cpanm --local-lib=/opt/inetsim-perl \
   https://cpan.metacpan.org/authors/id/N/NL/NLNETLABS/Net-DNS-1.37.tar.gz
 ```
 
-3. Update DNS.pm
+1. Update DNS.pm
+
 ```bash
 sudo cp /usr/share/perl5/INetSim/DNS.pm /usr/share/perl5/INetSim/DNS.pm.bak
 sudo vim /usr/share/perl5/INetSim/DNS.pm
@@ -265,6 +273,7 @@ $server->main_loop;
 ```
 
 4. Restart inetsim
+
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl restart inetsim
