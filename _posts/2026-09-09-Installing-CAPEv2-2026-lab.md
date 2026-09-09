@@ -621,8 +621,8 @@ You should download files, documents, and images to scatter on the system.
 ## Snapshotting the Windows VM
 For **CAPE with KVM/libvirt, take the operational snapshot while Windows is running at the desktop**, not after shutting it down.
 
-> [!IMPORTANT]
 > CAPE's current KVM code restores the snapshot and then expects the VM to already be in the `RUNNING` state. It explicitly raises an error saying the snapshot **must be in running state** if that isn't true.
+{: .prompt-tip }
 
 ### Prepare the VM immediately before snapshotting
 Get `cuckoo1` into exactly the state you want every malware analysis to begin from:
