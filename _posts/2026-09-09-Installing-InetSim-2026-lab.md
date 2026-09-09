@@ -6,11 +6,12 @@ tags: [inetsim]
 ---
 
 ## 2026 Lab work
-> [!NOTE] This is part of multiple install guides that I have made as I built out a new personal lab environment.<br/>
+> This is part of multiple install guides that I have made as I built out a new personal lab environment.<br/>
 > The following diagram shows a high-level view of the pipeline being built out.<br/>
 > * Step 1: [Installing InetSim (2026 lab)](https://www.travismathison.com/posts/Installing-InetSim-2026-lab/)
 > * Step 2: [Installing CAPEv2 sandbox (2026 lab)](https://www.travismathison.com/posts/Installing-CAPEv2-2026-lab/)
 > * Step 3: [Installing AssemblyLine4 (2026 lab)](https://www.travismathison.com/posts/Installing-AssemblyLine4-2026-lab/)
+{: .prompt-tip }
 
 <details>
 <summary>Click to expand diagram</summary>

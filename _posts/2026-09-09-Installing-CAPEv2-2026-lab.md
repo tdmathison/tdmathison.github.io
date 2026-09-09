@@ -6,11 +6,12 @@ tags: [cape, sandbox]
 ---
 
 ## 2026 Lab work
-> [!NOTE] This is part of multiple install guides that I have made as I built out a new personal lab environment.<br/>
+> This is part of multiple install guides that I have made as I built out a new personal lab environment.<br/>
 > The following diagram shows a high-level view of the pipeline being built out.<br/>
 > * Step 1: [Installing InetSim (2026 lab)](https://www.travismathison.com/posts/Installing-InetSim-2026-lab/)
 > * Step 2: [Installing CAPEv2 sandbox (2026 lab)](https://www.travismathison.com/posts/Installing-CAPEv2-2026-lab/)
 > * Step 3: [Installing AssemblyLine4 (2026 lab)](https://www.travismathison.com/posts/Installing-AssemblyLine4-2026-lab/)
+{: .prompt-tip }
 
 <details>
 <summary>Click to expand diagram</summary>
@@ -394,9 +395,9 @@ Then run the upstream-recommended **base** installation
 sudo ./cape2.sh base cape 2>&1 | tee cape-base.log
 ```
 
-> [!WARNING]
 > During the cape2.sh installation it creates a new account called `cape`.  From this point on it is critical to not mix up the administrative Ubuntu admin account and the `cape` account.
 >
+{: .prompt-warning }
 
 Your `capev2` user administers the host:
 
@@ -443,11 +444,12 @@ sudo systemctl stop cape-processor.service
 ### MongoDB
 If you did not change your kernel to version 6.8 in the beginning, you will likely see the following error due to an incompatibility. Follow the instructions at the beginning of the guide to swith kernel versions.
 
-> [!WARNING]
 > There is also a second, separate issue you may observe:
 >
 > `Cannot connect to MongoDB: 127.0.0.1:27017: Connection refused`
 >
+{: .prompt-warning }
+
 CAPE warns that the web GUI has Mongo enabled but MongoDB is not currently available.
 
 The following commands can be used to further understand the issue.
@@ -467,7 +469,6 @@ Due to TPM 2.0 requirements on Windows 11 it is easier to install Windows 10 if 
 
 Using `Virtual Machine Manager`, create a new VM called "cuckoo1" and mount the Windows 10 ISO to it and perform a default Windows 10 install.
 
-> [!TIP]
 >To fix a missing mouse cursor in a Windows virtual machine running on Ubuntu's Virtual Machine Manager (`virt-manager` / QEMU/KVM), you need to ==add a **Virtio Tablet** hardware.
 >
 > Add a USB Tablet Device
@@ -479,6 +480,7 @@ Using `Virtual Machine Manager`, create a new VM called "cuckoo1" and mount the 
 >- Select **USB** or **Input** -> **Tablet** (choose **Evtouch USB Tablet** or **USB Tablet**).
 >- Click **Finish**.
 >- Power on your Windows virtual machine. The mouse pointer should now appear and track smoothly without needing to grab the screen.
+{: .prompt-tip }
 
 ## Install and configure the CAPE agent inside `cuckoo1`
 Locate the agent on the CAPE host.
@@ -519,8 +521,8 @@ Inside the Windows 10 `cuckoo1` VM, install a **32-bit Python 3.8.2** interprete
 Download the 32-bit download from:<br/>
 [https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
 
->[!WARNING]
 >You need to install the Python 3.8.2 (x86) installer and not the latest due to compatibility issues with CAPEv2. If you install the latest you will likely have issues with the samples even running.
+{: .prompt-warning }
 
 ### Copy agent to the Windows machine
 Copy `/opt/CAPEv2/agent/agent.py` into the Windows guest. A simple temporary method is to serve it from the CAPE host:
@@ -1127,11 +1129,11 @@ sudo netplan generate
 sudo netplan apply
 ```
 
->[!CAUTION]
 > If you get err messages similar to:
 >
 > ** (generate:3201): WARNING **: 10:35:10.207: Permissions for /etc/netplan/01-network-manager-all.yaml are too open. Netplan configuration should NOT be accessible by others.
 >
+{: .prompt-danger }
 
 Execute the following commands to fix the permissions:
 ```bash

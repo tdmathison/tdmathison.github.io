@@ -6,11 +6,12 @@ tags: [assemblyline4]
 ---
 
 ## 2026 Lab work
-> [!NOTE] This is part of multiple install guides that I have made as I built out a new personal lab environment.<br/>
+> This is part of multiple install guides that I have made as I built out a new personal lab environment.<br/>
 > The following diagram shows a high-level view of the pipeline being built out.<br/>
 > * Step 1: [Installing InetSim (2026 lab)](https://www.travismathison.com/posts/Installing-InetSim-2026-lab/)
 > * Step 2: [Installing CAPEv2 sandbox (2026 lab)](https://www.travismathison.com/posts/Installing-CAPEv2-2026-lab/)
 > * Step 3: [Installing AssemblyLine4 (2026 lab)](https://www.travismathison.com/posts/Installing-AssemblyLine4-2026-lab/)
+{: .prompt-tip }
 
 <details>
 <summary>Click to expand diagram</summary>
@@ -232,12 +233,12 @@ The AssemblyLine4 installation wants the 24.04 LTS version of Ubuntu and not the
 Docs
 * [https://cybercentrecanada.github.io/assemblyline4_docs/](https://cybercentrecanada.github.io/assemblyline4_docs/)
 
-> [!WARNING]
 > During the local installation of AssemblyLine4 I found that is is quite resource heavy.  I had issues when allocating 8GB RAM and 2 CPUs.  
 > 
 > I switched this to instead use:
 > * 32GB RAM
 > * 4 CPUs w/4 Cores each
+{: .prompt-warning }
 
 ## Install Docker
 For this installation I will be using Docker and the documentation can be found at:
