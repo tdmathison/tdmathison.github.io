@@ -11,6 +11,7 @@ tags: [assemblyline4]
 > * Step 1: [Installing InetSim (2026 lab)](https://www.travismathison.com/posts/Installing-InetSim-2026-lab/)
 > * Step 2: [Installing CAPEv2 sandbox (2026 lab)](https://www.travismathison.com/posts/Installing-CAPEv2-2026-lab/)
 > * Step 3: [Installing AssemblyLine4 (2026 lab)](https://www.travismathison.com/posts/Installing-AssemblyLine4-2026-lab/)
+> * Step 4: [CAPEv2 Custom Parser Development Guide (2026 lab)](https://www.travismathison.com/posts/CAPEv2-Custom-Parser-Development-Guide-2026-lab)
 {: .prompt-tip }
 
 <details>
